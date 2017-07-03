@@ -1,0 +1,77 @@
+.height405{
+  height:405px;
+}
+.top0{
+  top:0px;
+}
+.height0{
+  height:0px;
+}
+.height50{
+  height:50px;
+}
+.displayBlock{
+  display: block !important;
+}
+.displayNone{
+  display:none !important;
+}
+.textAlignRight{
+  text-align: right;
+}
+.mainpage-description-wrapper-bgImg{
+  background-image: url("https://www0.dek-d.com/assets/writer/images/tttt.gif");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.noJavaScript{
+  text-align: right;
+  color: red;
+  font-size: 13px;
+}
+#wysiwyg_div_story-content{
+  width:100%;
+}
+#wysiwyg_table_story-content{
+  width: 100%;
+  height:auto;
+}
+.richtext-space textarea{
+  color: #85420A;
+  background-color: transparent;
+  width: 100%;
+  min-height: 400px;
+  border: none;
+  box-shadow: none;
+  font-size: 12px;
+  height:auto;
+
+}
+.btn-add-chapter{
+  cursor: pointer !important;
+}
+.richtext-space textarea::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #85420A;
+}
+.chapter-li-wrapper{
+  overflow: scroll !important;
+}
+.tiny-scroll-wrapper .viewport {
+  overflow: scroll !important;
+}
+.modal-story-icon-dek-d-writer {
+  background-image: url(&quot;https://www0.dek-d.com/assets/writer/images/tttt.gif&quot;);
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.app-modal.hide.fade {
+  width:100% !important;
+  
+}
+#modal-story-settings{
+  left: auto !important; 
+  max-width: auto !important;
+  margin-right: 85px;
+}
