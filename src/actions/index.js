@@ -1,6 +1,6 @@
 import axios from 'axios'
 import _ from 'lodash'
-export const EDIT_CHAPTER = 'edit_chapter'
+export const SAVE_CHAPTER = 'save_chapter'
 export const LOAD_NOVEL = 'load_novelitem'
 export const CHANGE_CHAPTER = 'change_chapter'
 export const CREATE_CHAPTER = 'create_chapter'
@@ -15,6 +15,9 @@ export const CLEARREMOTESUBMIT_READERCHAPTER = 'clearremotesubmit_readerchapter'
 export const PUBLISH_CHAPTER = 'publish_chapter'
 export const REMOTESUBMIT_TYPEIDENTIFY = 'remotesubmit_typeidentify'
 export const CLEARREMOTESUBMIT_TYPEIDENTIFY = 'clearremotesubmit_typeidentify'
+export const CHECK_NOVELTITLE = 'check_noveltitle'
+export const UPDATENOVEL_FROMMODAL = 'updatenovel_frommodal'
+// Mock up information
 const novelList = {
   novels: [{
     novelId: 0,
@@ -42,9 +45,13 @@ const novels = [
     novelId: 0,
     chapterNumber: 0,
     novels: {
-      basicDetail: { detail: '' },
+      novelTitle: '',
+      abstract: '',
+      tags: [],
+      category: { main: '', sub: '' },
       publish: [],
-      chapters: [{ name: 'name0', content: 'content0' }]
+      staticPublish: [],
+      chapters: [{ name: 'ข้อมูลเบื้องต้นของเรื่องนี้', content: '' }, { name: 'name0', content: 'content0' }]
     }
 
   },
@@ -52,9 +59,13 @@ const novels = [
     novelId: 1,
     chapterNumber: 0,
     novels: {
-      basicDetail: { detail: '' },
+      novelTitle: '',
+      abstract: '',
+      tags: [],
+      category: { main: '', sub: '' },
       publish: [],
-      chapters: [{ name: 'name1', content: 'content1' }]
+      staticPublish: [],
+      chapters: [{ name: 'ข้อมูลเบื้องต้นของเรื่องนี้', content: '' }, { name: 'name1', content: 'content1' }]
     }
 
   },
@@ -62,9 +73,13 @@ const novels = [
     novelId: 2,
     chapterNumber: 0,
     novels: {
-      basicDetail: { detail: '' },
+      novelTitle: '',
+      abstract: '',
+      tags: [],
+      category: { main: '', sub: '' },
       publish: [],
-      chapters: [{ name: 'name2', content: 'content2' }]
+      staticPublish: [],
+      chapters: [{ name: 'ข้อมูลเบื้องต้นของเรื่องนี้', content: '' }, { name: 'name2', content: 'content2' }]
     }
 
   },
@@ -72,9 +87,13 @@ const novels = [
     novelId: 3,
     chapterNumber: 0,
     novels: {
-      basicDetail: { detail: '' },
+      novelTitle: '',
+      abstract: '',
+      tags: [],
+      category: { main: '', sub: '' },
       publish: [],
-      chapters: [{ name: 'name3', content: 'content3' }]
+      staticPublish: [],
+      chapters: [{ name: 'ข้อมูลเบื้องต้นของเรื่องนี้', content: '' }, { name: 'name3', content: 'content3' }]
     }
 
   },
@@ -82,9 +101,13 @@ const novels = [
     novelId: 4,
     chapterNumber: 0,
     novels: {
-      basicDetail: { detail: '' },
+      novelTitle: '',
+      abstract: '',
+      tags: [],
+      category: { main: '', sub: '' },
       publish: [],
-      chapters: [{ name: 'name4', content: 'content4' }]
+      staticPublish: [],
+      chapters: [{ name: 'ข้อมูลเบื้องต้นของเรื่องนี้', content: '' }, { name: 'name4', content: 'content4' }]
     }
 
   }
@@ -92,69 +115,36 @@ const novels = [
 
 localStorage.setItem('novels', JSON.stringify(novels))
 
-export function editChapter (value) {
-  // if(value.typeOfSubmit === 'submitpublish'){
-  //   //submit
-  //   const novels = JSON.parse(localStorage.getItem('novels'))
-  //   const chapter = { name: value.name, content: value.content }
-  //   const chapterIndex = value.index
-  //   const novelId = value.novel
-  //   novels[value.novel].novels.chapters[value.index] = chapter
-  //   novels[value.novel].chapterNumber = value.index
-
-  //   //publish
-  //   if (!(chapterIndex in novels[novelId].novels.publish)) {
-  //     novels[novelId].novels.publish.push(chapterIndex)
-  //   }
-  //   localStorage.setItem('novels', JSON.stringify(novels))
-
-  //   const objectEdit =
-  //     {
-  //       value: value,
-  //       index: value.index,
-  //       publish: { chapterId: chapterIndex, novelId: novelId }
-  //     }
-
-  //   return {
-  //     type: EDIT_CHAPTER,
-  //     payload: objectEdit
-  //   }
-
-  // } else {
-    const novels = JSON.parse(localStorage.getItem('novels'))
-    const chapter = { name: value.name, content: value.content }
-    const chapterIndex = value.index
-    novels[value.novel].novels.chapters[value.index] = chapter
-    novels[value.novel].chapterNumber = value.index
-    var newPub = ''
-    if (Object.values(novels[value.novel].novels.publish).indexOf(value.index) > -1) {
-      const oldPub = novels[value.novel].novels.publish
-      console.log("oldpub",oldPub)
-      const index = oldPub.indexOf(chapterIndex);
-      console.log("chapterIndex",chapterIndex)
-      console.log("index",index)
-      
-      newPub = oldPub
-      newPub.splice(index, 1)
-      
-      console.log("newpub",newPub)
-      novels[value.novel].novels.publish = newPub
-      
-      localStorage.setItem('novels', JSON.stringify(novels))
-    }
-
+export function saveChapter (value) {
+  const novels = JSON.parse(localStorage.getItem('novels'))
+  const chapter = { name: value.name, content: value.content }
+  const chapterIndex = value.index
+  novels[value.novel].novels.chapters[value.index] = chapter
+  novels[value.novel].chapterNumber = value.index
+  var newPub = ''
+  if (Object.values(novels[value.novel].novels.publish).indexOf(value.index) > -1) {
+    const oldPub = novels[value.novel].novels.publish
+    const index = oldPub.indexOf(chapterIndex)
+    newPub = oldPub
+    newPub.splice(index, 1)
+    novels[value.novel].novels.publish = newPub
     localStorage.setItem('novels', JSON.stringify(novels))
+  }
 
-    const objectEdit =
-      {
-        value: value,
-        newPub: newPub,
-        index: value.index,
-      }
-    return {
-      type: EDIT_CHAPTER,
-      payload: objectEdit
+  localStorage.setItem('novels', JSON.stringify(novels))
+
+  // validate status with server then tell users if saving success or fail
+  alert('saved')
+  const objectEdit =
+    {
+      value: value,
+      newPub: newPub,
+      index: value.index
     }
+  return {
+    type: SAVE_CHAPTER,
+    payload: objectEdit
+  }
   // }
 }
 
@@ -169,6 +159,29 @@ export function createChapter (novelId) {
     type: CREATE_CHAPTER,
     payload: newChapter
   }
+}
+
+export function updateNovelFromModal (values) {
+
+  //start backend mockup
+
+  const novels = JSON.parse(localStorage.getItem('novels'))
+  const novelId = values.novelId
+  const category = values.category
+  delete category['text']
+  novels[novelId].novels.novelTitle = values.novelTitle
+  novels[novelId].novels.abstract = values.abstract
+  novels[novelId].novels.tags = values.tags
+  novels[novelId].novels.category = category
+  localStorage.setItem('novels', JSON.stringify(novels))
+
+  //end backend mockup
+
+  return {
+    type: UPDATENOVEL_FROMMODAL,
+    payload: values
+  }
+  
 }
 
 export function selectChapter (selectChapterId) {
@@ -205,9 +218,9 @@ export function selectNovelList (novelId, currentNovel) {
   const novel = _.find(novels, { 'novelId': novelIdInt })
 
   const currentNovelId = currentNovel.novelId
-
   const originalNovel = _.find(novels, { 'novelId': currentNovelId })
-  if (JSON.stringify(originalNovel) === JSON.stringify(currentNovel)) {
+  
+  if (JSON.stringify(originalNovel.novels) === JSON.stringify(currentNovel.novels)) {
 
   } else {
     var confirmSave = confirm('คุณต้องการบันทึกสิ่งที่แก้ไขไปหรือไม่?')
@@ -258,13 +271,44 @@ export function publishChapter (novelId, chapterId) {
   const obj = { chapterId: chapterId, novelId: novelId }
   const novels = JSON.parse(localStorage.getItem('novels'))
 
-  if (!(Object.values(novels[novelId].novels.publish).indexOf(chapterId ) > -1 )) {
-    novels[novelId].novels.publish.push(chapterId)
-    localStorage.setItem('novels', JSON.stringify(novels))
+  if (chapterId === 1 || chapterId === 0 ) {
+    if (!(Object.values(novels[novelId].novels.publish).indexOf(chapterId) > -1)) {
+      novels[novelId].novels.publish.push(chapterId)
+      localStorage.setItem('novels', JSON.stringify(novels))
+    }
+    if (!(Object.values(novels[novelId].novels.staticPublish).indexOf(chapterId) > -1)) {
+      novels[novelId].novels.staticPublish.push(chapterId)
+      localStorage.setItem('novels', JSON.stringify(novels))
+    }
+  } else {
+    if (!(Object.values(novels[novelId].novels.publish).indexOf(chapterId) > -1) && (Object.values(novels[novelId].novels.publish).indexOf(chapterId - 1) > -1)) {
+      novels[novelId].novels.publish.push(chapterId)
+      localStorage.setItem('novels', JSON.stringify(novels))
+    }
+    if (!(Object.values(novels[novelId].novels.staticPublish).indexOf(chapterId) > -1) && (Object.values(novels[novelId].novels.staticPublish).indexOf(chapterId - 1) > -1)) {
+      novels[novelId].novels.staticPublish.push(chapterId)
+      localStorage.setItem('novels', JSON.stringify(novels))
+    } else {
+      if ((Object.values(novels[novelId].novels.staticPublish).indexOf(chapterId) > -1)) {
+        // already published
+      } else {
+        alert('Please publish previous chapter (start from chapter 1)')
+      }
+    }
   }
 
   return {
     type: PUBLISH_CHAPTER,
     payload: obj
+  }
+}
+
+export function checkNovelTitle (Name) {
+  // result = axios.get(api dek-d ) check with sv
+  // the result should be available or unavailable
+  var result = Math.random() < 0.5 ? 'available' : 'unavailable'
+  return {
+    type: CHECK_NOVELTITLE,
+    payload: result
   }
 }

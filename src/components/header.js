@@ -9,12 +9,18 @@ class Header extends Component {
     
   }
   render () {
+    
     const novel = this.props.readerChapterProps
+    const headerWrapperClassName = `${Object.values(novel.novels.publish).indexOf(novel.chapterNumber ) > -1 ?' state-published':'state-draft'}`
+    const headerInsideClassName = `${Object.values(novel.novels.staticPublish).indexOf(novel.chapterNumber ) > -1 ?'btn-action-wrapper float-right is-public':'btn-action-wrapper float-right '}`
+    const headerTitleClassName = `${Object.values(novel.novels.publish).indexOf(novel.chapterNumber ) > -1 ?' current-chapter-header chapter-state txt-ellipsis state-published':'current-chapter-header chapter-state txt-ellipsis state-draft'}`
     return (
       <div>
 
-        <div id='story-editor-toolbar' className='state-draft'>
-          <div className='btn-action-wrapper float-right'>
+        <div id='story-editor-toolbar' className={headerWrapperClassName}>
+          <div className={headerInsideClassName}>
+           
+            <a className="btn-action-view btn-action btn-raised btn-orange-theme" target="_blank" title="เปิดหน้าอ่านนิยาย" href="https://writer.dek-d.com/dek-d/writer/viewlongc.php?id=1662736&amp;chapter=3"><i className="fa fa-eye"></i></a>
             <button type='button' onClick={() => { this.props.dispatch(submit('readerChapter')); this.props.remoteSubmitReaderChapter()   }} className='btn-action-save btn-action btn-raised btn-orange-theme' title='บันทึกเป็น Draft ไว้ (Ctrl+S)'><i className='fa fa-save' /> บันทึกแบบร่าง</button>
             <button type='button' onClick={() => { this.props.publishChapter(novel.novelId, novel.chapterNumber) }} className='btn-action-publish btn-action btn-raised btn-orange-theme'><i className='fa fa-globe' /> บันทึกและเผยแพร่</button>
             <div className='action-autosave-wrapper'>
@@ -26,7 +32,7 @@ class Header extends Component {
               </label>
             </div>
           </div>
-          <div className='current-chapter-header chapter-state txt-ellipsis state-draft' title='ข้อมูลเบื้องต้นของเรื่องนี้'>ข้อมูลเบื้องต้นของเรื่องนี้</div>
+          <div className={headerTitleClassName} title='ข้อมูลเบื้องต้นของเรื่องนี้'>{this.props.readerChapterProps.novels.chapters[this.props.readerChapterProps.chapterNumber].name}</div>
         </div>
 
       </div>
@@ -36,7 +42,8 @@ class Header extends Component {
 function mapStateToProps (state, ownProps) {
   return {
     readerChapterProps: state.readerChapter,
-    remoteSubmit: state.remoteSubmit
+    remoteSubmit: state.remoteSubmit,
+    publish: state.publish
 
   }
 }

@@ -28,6 +28,7 @@ class SideNavHeader extends Component {
   }
   
   render () {
+    
     return (
       <div className='side-nav-header'>
         <a className='logo float-left' href='https://my.dek-d.com/dekdee/control/writer3/story-editor.php?story_id=d-423793&amp;chapter=-1'>

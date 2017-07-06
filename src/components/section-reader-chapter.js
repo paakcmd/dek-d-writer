@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Field, reduxForm, submit } from 'redux-form'
 import { connect } from 'react-redux'
-import { editChapter, clearRemoteSubmitTypeIdentify, clearRemoteSubmitReaderChapter, remoteSubmitReaderChapter } from '../actions/index'
+import { saveChapter, clearRemoteSubmitTypeIdentify, clearRemoteSubmitReaderChapter, remoteSubmitReaderChapter } from '../actions/index'
 import { store } from './../store'
 class SectionReaderChapter extends Component {
   constructor (props) {
@@ -15,18 +15,6 @@ class SectionReaderChapter extends Component {
       this.setState(() => ({ edittingTitle: 'No' }))
       this.props.clearRemoteSubmitReaderChapter()
     }
-
-  }
-  componentDidUpdate (prevProps) {
-    // if ( this.props.remoteSubmit.typeOfSubmit === 'submit' && prevProps.remoteSubmit.typeOfSubmit === '') {
-    //   console.log("sub")
-    //   this.props.dispatch(submit('readerChapter'))
-    //   this.props.remoteSubmitReaderChapter()
-    // } else if ( this.props.remoteSubmit.typeOfSubmit === 'submitpublish' && prevProps.remoteSubmit.typeOfSubmit === '') {
-    //   console.log("subpub")
-    //   this.props.dispatch(submit('readerChapter'))
-    //   this.props.remoteSubmitReaderChapter()
-    // }
   }
 
   renderField2 (field) {
@@ -72,7 +60,7 @@ class SectionReaderChapter extends Component {
 
   // onSubmit (values) {
   //   this.setState({ edittingTitle: 'No' })
-  //   this.props.editChapter(values, this.props.readerChapterProps.chapterNumber)
+  //   this.props.saveChapter(values, this.props.readerChapterProps.chapterNumber)
   // }
 
   sectionReaderChapterEdit () {
@@ -85,6 +73,9 @@ class SectionReaderChapter extends Component {
     const editClassName = ` ${this.state.edittingTitle === 'Yes' ? '' : 'edit'}`
     const { handleSubmit } = this.props
     const chapter = this.props.readerChapterProps.novels.chapters[this.props.readerChapterProps.chapterNumber]
+    const introNameClassName = `${this.props.readerChapterProps.chapterNumber === 0 ? 'section-reader-chapter displayNone': 'section-reader-chapter'}`
+    const introKumPloyClassName = `${this.props.readerChapterProps.chapterNumber === 0 ? 'section-reader-headbar': 'displayNone section-reader-headbar'}`
+
     return (
       <div>
         <form onSubmit={(e) => {
@@ -92,9 +83,9 @@ class SectionReaderChapter extends Component {
           handleSubmit(e)
         }} >
 
-          <div className='section-reader-chapter' >
+          <div className={introNameClassName} >
             <div className='chapter-name-wrapper editable' onClick={this.sectionReaderChapterEdit.bind(this)}>
-              <span className='chapter-count'>ตอนที่ <span className='val'>{this.props.readerChapterProps.chapterNumber + 1}</span> : </span>
+              <span className='chapter-count'>ตอนที่ <span className='val'>{this.props.readerChapterProps.chapterNumber }</span> : </span>
               <span className='chapter-name hide-on-edit edit-target'>{chapter ? chapter.name : 'ยังไม่มีชื่อเรื่อง'}</span>
               <div className={editClassName}>
 
@@ -127,7 +118,7 @@ class SectionReaderChapter extends Component {
 
           </div>
           <div className='section-reader-content'>
-            <div className='section-reader-headbar displayNone'>
+            <div className={introKumPloyClassName}>
 
               <div className='mainpage-description-wrapper story-header-factor editable-modal displayBlock' >
                 <div className='story-img imgLiquid_bgSize imgLiquid_ready mainpage-description-wrapper-bgImg' >
@@ -135,7 +126,7 @@ class SectionReaderChapter extends Component {
                 </div>
                 <div className='desc-wrapper'>
                   <div className='desc-header content-header-small displayBlock' >คำโปรย</div>
-                  <div className='desc-content'>ยังไม่มีคำโปรย</div>
+                  <div className='desc-content'>{this.props.readerChapterProps.novels.abstract === '' ? 'ยังไม่มีคำโปรย' : this.props.readerChapterProps.novels.abstract }</div>
                 </div>
               </div>
               <p className='noJavaScript'>*ยกเลิกการใช้ &lt;script&gt; ทั้งหมดเพื่อความปลอดภัยของผู้เข้าชม</p>
@@ -180,6 +171,7 @@ class SectionReaderChapter extends Component {
 
 function validate (values) {
   const errors = {}
+  // check error in redux form here
   return errors
 }
 function mapStateToProps (state, ownProps) {
@@ -199,10 +191,10 @@ const SectionReaderChapterReduxForm = reduxForm({
   validate,
   form: 'readerChapter',
   onSubmit: (values) => {
-    store.dispatch(editChapter(values))
+    store.dispatch(saveChapter(values))
     // store.dispatch(clearRemoteSubmitTypeIdentify())
   },
   enableReinitialize: true
 })(SectionReaderChapter)
 
-export default connect(mapStateToProps, { clearRemoteSubmitTypeIdentify, editChapter, clearRemoteSubmitReaderChapter, remoteSubmitReaderChapter })(SectionReaderChapterReduxForm)
+export default connect(mapStateToProps, { clearRemoteSubmitTypeIdentify, saveChapter, clearRemoteSubmitReaderChapter, remoteSubmitReaderChapter })(SectionReaderChapterReduxForm)
