@@ -18,39 +18,20 @@ export const CLEARREMOTESUBMIT_TYPEIDENTIFY = 'clearremotesubmit_typeidentify'
 export const CHECK_NOVELTITLE = 'check_noveltitle'
 export const UPDATENOVEL_FROMMODAL = 'updatenovel_frommodal'
 // Mock up information
-const novelList = {
-  novels: [{
-    novelId: 0,
-    novelTitle: 'Example0'
-  }, {
-    novelId: 1,
-    novelTitle: 'Example1'
-  }, {
-    novelId: 2,
-    novelTitle: 'Example2'
-  }, {
-    novelId: 3,
-    novelTitle: 'Example3'
-  }, {
-    novelId: 4,
-    novelTitle: 'Example4'
-  }
-  ]
-}
 
-localStorage.setItem('novelList', JSON.stringify(novelList))
 
 const novels = [
   {
     novelId: 0,
     chapterNumber: 0,
     novels: {
-      novelTitle: '',
+      novelTitle: 'Example0',
       abstract: '',
       tags: [],
       category: { main: '', sub: '' },
       publish: [],
       staticPublish: [],
+      css: '',
       chapters: [{ name: 'ข้อมูลเบื้องต้นของเรื่องนี้', content: '' }, { name: 'name0', content: 'content0' }]
     }
 
@@ -59,12 +40,13 @@ const novels = [
     novelId: 1,
     chapterNumber: 0,
     novels: {
-      novelTitle: '',
+      novelTitle: 'Example1',
       abstract: '',
       tags: [],
       category: { main: '', sub: '' },
       publish: [],
       staticPublish: [],
+      css: '',
       chapters: [{ name: 'ข้อมูลเบื้องต้นของเรื่องนี้', content: '' }, { name: 'name1', content: 'content1' }]
     }
 
@@ -73,12 +55,13 @@ const novels = [
     novelId: 2,
     chapterNumber: 0,
     novels: {
-      novelTitle: '',
+      novelTitle: 'Example2',
       abstract: '',
       tags: [],
       category: { main: '', sub: '' },
       publish: [],
       staticPublish: [],
+      css: '',
       chapters: [{ name: 'ข้อมูลเบื้องต้นของเรื่องนี้', content: '' }, { name: 'name2', content: 'content2' }]
     }
 
@@ -87,12 +70,13 @@ const novels = [
     novelId: 3,
     chapterNumber: 0,
     novels: {
-      novelTitle: '',
+      novelTitle: 'Example3',
       abstract: '',
       tags: [],
       category: { main: '', sub: '' },
       publish: [],
       staticPublish: [],
+      css: '',
       chapters: [{ name: 'ข้อมูลเบื้องต้นของเรื่องนี้', content: '' }, { name: 'name3', content: 'content3' }]
     }
 
@@ -101,12 +85,13 @@ const novels = [
     novelId: 4,
     chapterNumber: 0,
     novels: {
-      novelTitle: '',
+      novelTitle: 'Example4',
       abstract: '',
       tags: [],
       category: { main: '', sub: '' },
       publish: [],
       staticPublish: [],
+      css: '',
       chapters: [{ name: 'ข้อมูลเบื้องต้นของเรื่องนี้', content: '' }, { name: 'name4', content: 'content4' }]
     }
 
@@ -116,11 +101,17 @@ const novels = [
 localStorage.setItem('novels', JSON.stringify(novels))
 
 export function saveChapter (value) {
+  console.log('savechapter', value)
   const novels = JSON.parse(localStorage.getItem('novels'))
   const chapter = { name: value.name, content: value.content }
   const chapterIndex = value.index
   novels[value.novel].novels.chapters[value.index] = chapter
   novels[value.novel].chapterNumber = value.index
+  novels[value.novel].codearea = value.codearea
+  if (novels[value.novel].novels.staticPublish.length === 0 && value.css !== '') {
+    alert('โปรด Publish ก่อนใส่ CSS ')
+    return ''
+  }
   var newPub = ''
   if (Object.values(novels[value.novel].novels.publish).indexOf(value.index) > -1) {
     const oldPub = novels[value.novel].novels.publish
@@ -162,8 +153,7 @@ export function createChapter (novelId) {
 }
 
 export function updateNovelFromModal (values) {
-
-  //start backend mockup
+  // start backend mockup
 
   const novels = JSON.parse(localStorage.getItem('novels'))
   const novelId = values.novelId
@@ -175,13 +165,12 @@ export function updateNovelFromModal (values) {
   novels[novelId].novels.category = category
   localStorage.setItem('novels', JSON.stringify(novels))
 
-  //end backend mockup
+  // end backend mockup
 
   return {
     type: UPDATENOVEL_FROMMODAL,
     payload: values
   }
-  
 }
 
 export function selectChapter (selectChapterId) {
@@ -203,7 +192,8 @@ export function loadNovel () {
 
 export function loadNovelList () {
   // load novelList from db
-  const novelList = JSON.parse(localStorage.getItem('novelList'))
+  const novels = JSON.parse(localStorage.getItem('novels'))
+  const novelList = { novels: _.map(novels, (novel) => { return { novelTitle: novel.novels.novelTitle, novelId: novel.novelId } }) }
   return {
     type: LOAD_NOVELLIST,
     payload: novelList
@@ -219,7 +209,7 @@ export function selectNovelList (novelId, currentNovel) {
 
   const currentNovelId = currentNovel.novelId
   const originalNovel = _.find(novels, { 'novelId': currentNovelId })
-  
+
   if (JSON.stringify(originalNovel.novels) === JSON.stringify(currentNovel.novels)) {
 
   } else {
@@ -271,7 +261,7 @@ export function publishChapter (novelId, chapterId) {
   const obj = { chapterId: chapterId, novelId: novelId }
   const novels = JSON.parse(localStorage.getItem('novels'))
 
-  if (chapterId === 1 || chapterId === 0 ) {
+  if (chapterId === 1 || chapterId === 0) {
     if (!(Object.values(novels[novelId].novels.publish).indexOf(chapterId) > -1)) {
       novels[novelId].novels.publish.push(chapterId)
       localStorage.setItem('novels', JSON.stringify(novels))

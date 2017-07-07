@@ -3,7 +3,7 @@ import { LOAD_NOVELLIST } from '../actions/index'
 const init_state = {
   novels: [{
     novelId: '',
-    novelTitle: ''
+    novelTitle: 'ยังไม่มีชื่อเรื่อง'
   }
   ]
 }

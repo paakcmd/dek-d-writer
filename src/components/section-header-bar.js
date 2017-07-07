@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import _ from 'lodash'
-import { checkNovelTitle, updateNovelFromModal } from '../actions/index'
+import { checkNovelTitle, updateNovelFromModal, loadNovelList } from '../actions/index'
 import Modal from 'react-modal'
 import { Field, reduxForm } from 'redux-form'
 import { WithContext as ReactTags } from 'react-tag-input'
@@ -104,6 +104,7 @@ class SectionHeaderBar extends Component {
         values = { ...values, tags: this.state.tags }
         values = { ...values, category: this.state.category }
         this.props.updateNovelFromModal(values)
+        this.props.loadNovelList()
         alert("submitted")
         this.closeModal()
       }
@@ -118,7 +119,7 @@ class SectionHeaderBar extends Component {
     }
   }
   render () {
-    console.log('initvalue', this.props.initialValues)
+    
     const modalStyles = {
       content: {
         top: '50%',
@@ -132,9 +133,9 @@ class SectionHeaderBar extends Component {
         border: 'none'
       }
     }
-    const { novelList, checkNovel } = this.props
-    const { readerChapterProps } = this.props
-    const title = _.find(novelList.novels, { 'novelId': readerChapterProps.novelId }).novelTitle
+    
+    const { readerChapterProps, checkNovel } = this.props
+    const title = readerChapterProps.novels.novelTitle
     const statusNovelTitleClassName = `${checkNovel.novelTitleStatus === 'available' ? 'secction-col status-handle state-available' : 'secction-col status-handle  state-error '}`
     const categoryButtonClassName = `${this.state.categoryButton === 1 ? 'js-dropdown-menu popmenu-template category-dropdown displayBlock' : 'js-dropdown-menu popmenu-template category-dropdown'}`
     return (
@@ -336,7 +337,6 @@ function validate (values) {
 function mapStateToProps (state, ownProps) {
   return {
     readerChapterProps: state.readerChapter,
-    novelList: state.novelList,
     checkNovel: state.checkNovelTitle,
     initialValues: {
       novelId: state.readerChapter.novelId,
@@ -353,4 +353,4 @@ const SectionHeaderBarForm = reduxForm({
   enableReinitialize: true
 })(SectionHeaderBar)
 
-export default connect(mapStateToProps, { checkNovelTitle, updateNovelFromModal })(SectionHeaderBarForm)
+export default connect(mapStateToProps, { checkNovelTitle, updateNovelFromModal, loadNovelList })(SectionHeaderBarForm)

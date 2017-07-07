@@ -16,13 +16,13 @@ class Header extends Component {
     const headerTitleClassName = `${Object.values(novel.novels.publish).indexOf(novel.chapterNumber ) > -1 ?' current-chapter-header chapter-state txt-ellipsis state-published':'current-chapter-header chapter-state txt-ellipsis state-draft'}`
     return (
       <div>
-
         <div id='story-editor-toolbar' className={headerWrapperClassName}>
           <div className={headerInsideClassName}>
            
             <a className="btn-action-view btn-action btn-raised btn-orange-theme" target="_blank" title="เปิดหน้าอ่านนิยาย" href="https://writer.dek-d.com/dek-d/writer/viewlongc.php?id=1662736&amp;chapter=3"><i className="fa fa-eye"></i></a>
             <button type='button' onClick={() => { this.props.dispatch(submit('readerChapter')); this.props.remoteSubmitReaderChapter()   }} className='btn-action-save btn-action btn-raised btn-orange-theme' title='บันทึกเป็น Draft ไว้ (Ctrl+S)'><i className='fa fa-save' /> บันทึกแบบร่าง</button>
             <button type='button' onClick={() => { this.props.publishChapter(novel.novelId, novel.chapterNumber) }} className='btn-action-publish btn-action btn-raised btn-orange-theme'><i className='fa fa-globe' /> บันทึกและเผยแพร่</button>
+            
             <div className='action-autosave-wrapper'>
               <span className='label-txt' title='บันทึกอัตโนมัติ ทุกๆ 2 นาที'>บันทึกอัตโนมัติ : </span>
               <label className='switch switch-green autosave-toggle-switch' title='เปิด/ปิด การบันทึกอัตโนมัติ'>

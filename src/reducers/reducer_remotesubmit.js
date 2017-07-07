@@ -12,9 +12,9 @@ export default function (state = init, action) {
     case CLEARREMOTESUBMIT_READERCHAPTER:
       return { ...state, readerChapter: 0 }
     case REMOTESUBMIT_TYPEIDENTIFY:
-      return {...state, typeOfSubmit: action.payload }
+      return { ...state, typeOfSubmit: action.payload }
     case CLEARREMOTESUBMIT_TYPEIDENTIFY:
-      return {...state, typeOfSubmit: ''}
+      return { ...state, typeOfSubmit: '' }
   }
   return state
 }

@@ -1,4 +1,4 @@
-import { UPDATENOVEL_FROMMODAL, PUBLISH_CHAPTER, SELECT_NOVELLIST, CREATE_CHAPTER, LOAD_NOVEL, SELECT_CHAPTER, SAVE_CHAPTER } from '../actions/index'
+import { LOAD_NOVELLIST, UPDATENOVEL_FROMMODAL, PUBLISH_CHAPTER, SELECT_NOVELLIST, CREATE_CHAPTER, LOAD_NOVEL, SELECT_CHAPTER, SAVE_CHAPTER } from '../actions/index'
 
 const init_state = {
   novelId: 0,
@@ -10,6 +10,7 @@ const init_state = {
     category: { main: '', sub: '', text: '' },
     publish: [],
     staticPublish: [],
+    css: '',
     chapters: [{ name: 'ข้อมูลเบื้องต้นของเรื่องนี้', content: '' }, { name: '', content: '' }]
   }
 }
@@ -35,9 +36,9 @@ export default function (state = init_state, action) {
         state = { ...state, novels: { ...state.novels, publish: action.payload.newPub } }
       }
       state = { ...state, novels: { ...state.novels, chapters: previousChapter } }
-
+      state = { ...state, novels: { ...state.novels, codearea: action.payload.value.codearea } }
       return state
-    
+
     case SELECT_NOVELLIST:
       return action.payload
 
@@ -45,7 +46,6 @@ export default function (state = init_state, action) {
       state = { ...state, novels: { ...state.novels, novelTitle: action.payload.novelTitle } }
       state = { ...state, novels: { ...state.novels, abstract: action.payload.abstract } }
       state = { ...state, novels: { ...state.novels, tags: action.payload.tags } }
-      console.log("state",state)
       return { ...state, novels: { ...state.novels, category: action.payload.category } }
     case PUBLISH_CHAPTER:
       const prevPublish = [...state.novels.publish]

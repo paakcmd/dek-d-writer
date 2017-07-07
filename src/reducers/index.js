@@ -3,7 +3,8 @@ import readerChapterReducer from './reducer_novel'
 import novelList from './reducer_novelList'
 import remoteSubmit from './reducer_remoteSubmit'
 import checkNovelTitle from './reducer_checkNovelTItle'
-// import publish from './reducer_publish'
+import user from './reducer_user'
+
 import { reducer as formReducer } from 'redux-form'
 
 const rootReducer = combineReducers({
@@ -11,8 +12,8 @@ const rootReducer = combineReducers({
   readerChapter: readerChapterReducer,
   novelList: novelList,
   remoteSubmit: remoteSubmit,
-  checkNovelTitle: checkNovelTitle
-  // publish: publish
+  checkNovelTitle: checkNovelTitle,
+  user: user
 })
 
 export default rootReducer

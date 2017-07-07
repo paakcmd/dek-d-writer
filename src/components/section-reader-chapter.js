@@ -68,14 +68,18 @@ class SectionReaderChapter extends Component {
       this.setState({ edittingTitle: 'Yes' })
     }
   }
-
+  resetCSS () {
+    console.log(this.props)
+  }
   render () {
+    console.log('initvalue', this.props.initialValues)
     const editClassName = ` ${this.state.edittingTitle === 'Yes' ? '' : 'edit'}`
     const { handleSubmit } = this.props
     const chapter = this.props.readerChapterProps.novels.chapters[this.props.readerChapterProps.chapterNumber]
-    const introNameClassName = `${this.props.readerChapterProps.chapterNumber === 0 ? 'section-reader-chapter displayNone': 'section-reader-chapter'}`
-    const introKumPloyClassName = `${this.props.readerChapterProps.chapterNumber === 0 ? 'section-reader-headbar': 'displayNone section-reader-headbar'}`
-
+    const introNameClassName = `${this.props.readerChapterProps.chapterNumber === 0 ? 'section-reader-chapter displayNone' : 'section-reader-chapter'}`
+    const introKumPloyClassName = `${this.props.readerChapterProps.chapterNumber === 0 ? 'section-reader-headbar' : 'displayNone section-reader-headbar'}`
+    const codeBlockerClassName = `${this.props.readerChapterProps.novels.staticPublish.length > 0 ? 'code-blocker vertical-middle-wrapper displayNone' : 'code-blocker vertical-middle-wrapper'}`
+    const cssFillerBlockClassName = `${this.props.readerChapterProps.chapterNumber === 0 ? '' : 'displayNone'}`
     return (
       <div>
         <form onSubmit={(e) => {
@@ -122,7 +126,7 @@ class SectionReaderChapter extends Component {
 
               <div className='mainpage-description-wrapper story-header-factor editable-modal displayBlock' >
                 <div className='story-img imgLiquid_bgSize imgLiquid_ready mainpage-description-wrapper-bgImg' >
-                  <img className='thumb-img displayNone' src='./Story Editor _ Writer_files/tttt.gif' alt='รูปไอคอนบทความ' />
+                  <img className='thumb-img displayNone' src='https://www0.dek-d.com/assets/writer/images/tttt.gif' alt='รูปไอคอนบทความ' />
                 </div>
                 <div className='desc-wrapper'>
                   <div className='desc-header content-header-small displayBlock' >คำโปรย</div>
@@ -145,19 +149,27 @@ class SectionReaderChapter extends Component {
 
               </div>
             </div>
+            <div className={cssFillerBlockClassName}>
+              <div className='codearea-section'>
+                <div className='codearea-header-wrapper'>
+                  <div className='codearea-header'>ใส่โค้ดตกแต่งให้หน้าหลัก</div><button type="reset" className='btn-code-reset btn-raised btn-brown-red' onClick={() => { this.resetCSS() }}>reset โค้ด</button>
+                  <span className='code-advise float-right textAlignRight'>
+                *โค้ดจะไม่เป็น Draft และจะอัพเดททันที<br />
+                *ยกเลิกการใช้ &lt;script&gt; ทั้งหมดเพื่อความปลอดภัยของผู้เข้าชม
+              </span>
+                  <div className='clear-float' />
+                </div>
+                <div className='richtext-wrapper codearea-rich-wrapper prevent-user-select'>
 
-            <div className='codearea-section'>
-              <div className='codearea-header-wrapper'>
-                <div className='codearea-header'>ใส่โค้ดตกแต่งให้หน้าหลัก</div><button className='btn-code-reset btn-raised btn-brown-red' type='reset'>reset โค้ด</button>
-                <span className='code-advise float-right textAlignRight'>
-              *โค้ดจะไม่เป็น Draft และจะอัพเดททันที<br />
-              *ยกเลิกการใช้ &lt;script&gt; ทั้งหมดเพื่อความปลอดภัยของผู้เข้าชม
-            </span>
-                <div className='clear-float' />
-              </div>
-              <div className='richtext-wrapper codearea-rich-wrapper prevent-user-select'>
-                <div className='code-blocker vertical-middle-wrapper'>
-                  <span><i className='fa fa-warning' /> จะสามารถใส่โค้ดได้ เมื่อเรื่องนี้ถูก Publish แล้ว</span>
+                  <Field
+                    name='codearea'
+                    component='textarea'
+                    id='codearea'
+                  />
+
+                  <div className={codeBlockerClassName}>
+                    <span><i className='fa fa-warning' /> จะสามารถใส่โค้ดได้ เมื่อเรื่องนี้ถูก Publish แล้ว</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -181,7 +193,8 @@ function mapStateToProps (state, ownProps) {
       ...state.readerChapter.novels.chapters[state.readerChapter.chapterNumber],
       index: state.readerChapter.chapterNumber,
       novel: state.readerChapter.novelId,
-      typeOfSubmit: state.remoteSubmit.typeOfSubmit
+      typeOfSubmit: state.remoteSubmit.typeOfSubmit,
+      codearea: state.readerChapter.novels.css
     },
     remoteSubmit: state.remoteSubmit
   }
