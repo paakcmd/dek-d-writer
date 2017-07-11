@@ -2,7 +2,6 @@ import axios from 'axios'
 import _ from 'lodash'
 export const SAVE_CHAPTER = 'save_chapter'
 export const LOAD_NOVEL = 'load_novelitem'
-export const CHANGE_CHAPTER = 'change_chapter'
 export const CREATE_CHAPTER = 'create_chapter'
 export const LOAD_CHAPTER = 'load_chapter'
 export const SELECT_CHAPTER = 'select_chapter'
@@ -17,13 +16,39 @@ export const REMOTESUBMIT_TYPEIDENTIFY = 'remotesubmit_typeidentify'
 export const CLEARREMOTESUBMIT_TYPEIDENTIFY = 'clearremotesubmit_typeidentify'
 export const CHECK_NOVELTITLE = 'check_noveltitle'
 export const UPDATENOVEL_FROMMODAL = 'updatenovel_frommodal'
+export const OPENMODAL_SETTING = 'openmodal_setting'
+export const CLEARMODAL_SETTING = 'clearmodal_setting'
+export const SIDE_COLLAPSE = 'side_collapse'
+export const FORM_HASBEENTOUCHED = 'form_hasbeentouched'
 // Mock up information
 
+const novelList = {
+  novels: [{
+    novelId: 0,
+    novelTitle: 'Example0'
+  }, {
+    novelId: 1,
+    novelTitle: 'Example1'
+  }, {
+      novelId: 2,
+      novelTitle: 'Example2'
+    }, {
+      novelId: 3,
+      novelTitle: 'Example3'
+    }, {
+      novelId: 4,
+      novelTitle: 'Example4'
+    }
+  ]
+}
+
+localStorage.setItem('novelList', JSON.stringify(novelList))
 
 const novels = [
   {
     novelId: 0,
     chapterNumber: 0,
+    overAllLastUpdate: '',
     novels: {
       novelTitle: 'Example0',
       abstract: '',
@@ -32,7 +57,7 @@ const novels = [
       publish: [],
       staticPublish: [],
       css: '',
-      chapters: [{ name: 'ข้อมูลเบื้องต้นของเรื่องนี้', content: '' }, { name: 'name0', content: 'content0' }]
+      chapters: [{ name: 'ข้อมูลเบื้องต้นของเรื่องนี้', content: '', chapterLastUpdate: '' }, { name: 'name0', content: 'content0', chapterLastUpdate: '' }]
     }
 
   },
@@ -47,7 +72,7 @@ const novels = [
       publish: [],
       staticPublish: [],
       css: '',
-      chapters: [{ name: 'ข้อมูลเบื้องต้นของเรื่องนี้', content: '' }, { name: 'name1', content: 'content1' }]
+      chapters: [{ name: 'ข้อมูลเบื้องต้นของเรื่องนี้', content: '', chapterLastUpdate: '' }, { name: 'name1', content: 'content1', chapterLastUpdate: '' }]
     }
 
   },
@@ -62,7 +87,7 @@ const novels = [
       publish: [],
       staticPublish: [],
       css: '',
-      chapters: [{ name: 'ข้อมูลเบื้องต้นของเรื่องนี้', content: '' }, { name: 'name2', content: 'content2' }]
+      chapters: [{ name: 'ข้อมูลเบื้องต้นของเรื่องนี้', content: '', chapterLastUpdate: '' }, { name: 'name2', content: 'content2', chapterLastUpdate: '' }]
     }
 
   },
@@ -77,7 +102,7 @@ const novels = [
       publish: [],
       staticPublish: [],
       css: '',
-      chapters: [{ name: 'ข้อมูลเบื้องต้นของเรื่องนี้', content: '' }, { name: 'name3', content: 'content3' }]
+      chapters: [{ name: 'ข้อมูลเบื้องต้นของเรื่องนี้', content: '', chapterLastUpdate: '' }, { name: 'name3', content: 'content3', chapterLastUpdate: '' }]
     }
 
   },
@@ -92,7 +117,7 @@ const novels = [
       publish: [],
       staticPublish: [],
       css: '',
-      chapters: [{ name: 'ข้อมูลเบื้องต้นของเรื่องนี้', content: '' }, { name: 'name4', content: 'content4' }]
+      chapters: [{ name: 'ข้อมูลเบื้องต้นของเรื่องนี้', content: '', chapterLastUpdate: '' }, { name: 'name4', content: 'content4', chapterLastUpdate: '' }]
     }
 
   }
@@ -108,7 +133,7 @@ export function saveChapter (value) {
   novels[value.novel].novels.chapters[value.index] = chapter
   novels[value.novel].chapterNumber = value.index
   novels[value.novel].codearea = value.codearea
-  if (novels[value.novel].novels.staticPublish.length === 0 && value.css !== '') {
+  if (novels[value.novel].novels.staticPublish.length === 0 && value.codearea !== '') {
     alert('โปรด Publish ก่อนใส่ CSS ')
     return ''
   }
@@ -119,10 +144,10 @@ export function saveChapter (value) {
     newPub = oldPub
     newPub.splice(index, 1)
     novels[value.novel].novels.publish = newPub
-    localStorage.setItem('novels', JSON.stringify(novels))
   }
 
   localStorage.setItem('novels', JSON.stringify(novels))
+  // return updated timestamp for each novel
 
   // validate status with server then tell users if saving success or fail
   alert('saved')
@@ -140,7 +165,7 @@ export function saveChapter (value) {
 }
 
 export function createChapter (novelId) {
-  const newChapter = { name: '', content: '' }
+  const newChapter = { name: '', content: '', chapterLastUpdate: '' }
 
   const novels = JSON.parse(localStorage.getItem('novels'))
   novels[novelId].novels.chapters.push(newChapter)
@@ -192,8 +217,9 @@ export function loadNovel () {
 
 export function loadNovelList () {
   // load novelList from db
-  const novels = JSON.parse(localStorage.getItem('novels'))
-  const novelList = { novels: _.map(novels, (novel) => { return { novelTitle: novel.novels.novelTitle, novelId: novel.novelId } }) }
+  const novelList = JSON.parse(localStorage.getItem('novelList'))
+  console.log(novelList)
+
   return {
     type: LOAD_NOVELLIST,
     payload: novelList
@@ -206,27 +232,7 @@ export function selectNovelList (novelId, currentNovel) {
 
   const novelIdInt = parseInt(novelId)
   const novel = _.find(novels, { 'novelId': novelIdInt })
-
-  const currentNovelId = currentNovel.novelId
-  const originalNovel = _.find(novels, { 'novelId': currentNovelId })
-
-  if (JSON.stringify(originalNovel.novels) === JSON.stringify(currentNovel.novels)) {
-
-  } else {
-    var confirmSave = confirm('คุณต้องการบันทึกสิ่งที่แก้ไขไปหรือไม่?')
-    if (confirmSave) {
-      novels[currentNovelId] = currentNovel
-
-      localStorage.setItem('novels', JSON.stringify(novels))
-    }
-  }
-
-  if (confirmSave) {
-    // update currentNovel to DB
-  } else {
-    // do nothing
-  }
-
+  
   return {
     type: SELECT_NOVELLIST,
     payload: novel
@@ -300,5 +306,29 @@ export function checkNovelTitle (Name) {
   return {
     type: CHECK_NOVELTITLE,
     payload: result
+  }
+}
+
+export function openModalSetting () {
+  return {
+    type: OPENMODAL_SETTING
+  }
+}
+
+export function clearModalSetting () {
+  return {
+    type: CLEARMODAL_SETTING
+  }
+}
+
+export function sideCollapse () {
+  return {
+    type: SIDE_COLLAPSE
+  }
+}
+
+export function formHasBeenTouched () {
+  return {
+    type: FORM_HASBEENTOUCHED
   }
 }

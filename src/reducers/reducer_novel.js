@@ -1,8 +1,9 @@
-import { LOAD_NOVELLIST, UPDATENOVEL_FROMMODAL, PUBLISH_CHAPTER, SELECT_NOVELLIST, CREATE_CHAPTER, LOAD_NOVEL, SELECT_CHAPTER, SAVE_CHAPTER } from '../actions/index'
+import { UPDATENOVEL_FROMMODAL, PUBLISH_CHAPTER, SELECT_NOVELLIST, CREATE_CHAPTER, LOAD_NOVEL, SELECT_CHAPTER, SAVE_CHAPTER } from '../actions/index'
 
 const init_state = {
   novelId: 0,
   chapterNumber: 0,
+  overAllLastUpdate: '',
   novels: {
     novelTitle: '',
     abstract: '',
@@ -11,7 +12,7 @@ const init_state = {
     publish: [],
     staticPublish: [],
     css: '',
-    chapters: [{ name: 'ข้อมูลเบื้องต้นของเรื่องนี้', content: '' }, { name: '', content: '' }]
+    chapters: [{ name: 'ข้อมูลเบื้องต้นของเรื่องนี้', content: '', chapterLastUpdate: '' }, { name: '', content: '', chapterLastUpdate: '' }]
   }
 }
 

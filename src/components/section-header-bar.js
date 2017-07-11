@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import _ from 'lodash'
-import { checkNovelTitle, updateNovelFromModal, loadNovelList } from '../actions/index'
+import { checkNovelTitle, updateNovelFromModal, loadNovelList, clearModalSetting } from '../actions/index'
 import Modal from 'react-modal'
 import { Field, reduxForm } from 'redux-form'
 import { WithContext as ReactTags } from 'react-tag-input'
@@ -28,17 +28,21 @@ class SectionHeaderBar extends Component {
     this.onSubmit = this.onSubmit.bind(this)
   }
 
-  componentDidUpdate (nextProps) {
-    if (this.props.readerChapterProps.novelId !== nextProps.readerChapterProps.novelId) {
+  componentDidUpdate (prevProps) {
+    if (this.props.readerChapterProps.novelId !== prevProps.readerChapterProps.novelId) {
       const category = this.props.initialValues.category
       this.setState({ category: category, tags: this.props.initialValues.tags })
       if (category.main !== '') {
-        const maincate = _.find(novelMainCategory, { main: parseInt(category.main)}).title
+        const maincate = _.find(novelMainCategory, { main: parseInt(category.main) }).title
         const subcate = _.find(novelCategory, { main: parseInt(category.main), sub: parseInt(category.sub) }).title
         this.setState({ categoryTitle: maincate + ' > ' + subcate })
       } else {
         this.setState({ categoryTitle: 'ฟรีสไตล์ > อื่นๆ' })
       }
+    }
+    if (prevProps.remoteOpenModal.modalSettingNovel === 0 && this.props.remoteOpenModal.modalSettingNovel === 1) {
+      this.openModal()
+      this.props.clearModalSetting();
     }
   }
 
@@ -46,7 +50,7 @@ class SectionHeaderBar extends Component {
     const category = this.props.initialValues.category
     this.setState({ category: category, tags: this.props.initialValues.tags })
     if (category.main !== '') {
-      const maincate = _.find(novelMainCategory, { main: parseInt(category.main)}).title
+      const maincate = _.find(novelMainCategory, { main: parseInt(category.main) }).title
       const subcate = _.find(novelCategory, { main: parseInt(category.main), sub: parseInt(category.sub) }).title
       this.setState({ categoryTitle: maincate + ' > ' + subcate })
     } else {
@@ -105,7 +109,7 @@ class SectionHeaderBar extends Component {
         values = { ...values, category: this.state.category }
         this.props.updateNovelFromModal(values)
         this.props.loadNovelList()
-        alert("submitted")
+        alert('submitted')
         this.closeModal()
       }
     } else if (this.props.checkNovel.novelTitleStatus === 'unavailable') {
@@ -119,7 +123,6 @@ class SectionHeaderBar extends Component {
     }
   }
   render () {
-    
     const modalStyles = {
       content: {
         top: '50%',
@@ -133,7 +136,7 @@ class SectionHeaderBar extends Component {
         border: 'none'
       }
     }
-    
+
     const { readerChapterProps, checkNovel } = this.props
     const title = readerChapterProps.novels.novelTitle
     const statusNovelTitleClassName = `${checkNovel.novelTitleStatus === 'available' ? 'secction-col status-handle state-available' : 'secction-col status-handle  state-error '}`
@@ -344,7 +347,8 @@ function mapStateToProps (state, ownProps) {
       tags: state.readerChapter.novels.tags,
       category: state.readerChapter.novels.category,
       novelTitle: state.readerChapter.novels.novelTitle
-    }
+    },
+    remoteOpenModal: state.remoteOpenModal
   }
 }
 const SectionHeaderBarForm = reduxForm({
@@ -353,4 +357,4 @@ const SectionHeaderBarForm = reduxForm({
   enableReinitialize: true
 })(SectionHeaderBar)
 
-export default connect(mapStateToProps, { checkNovelTitle, updateNovelFromModal, loadNovelList })(SectionHeaderBarForm)
+export default connect(mapStateToProps, { checkNovelTitle, updateNovelFromModal, loadNovelList, clearModalSetting })(SectionHeaderBarForm)

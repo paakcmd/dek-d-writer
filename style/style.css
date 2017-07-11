@@ -10,6 +10,9 @@
 .height50{
   height:50px;
 }
+.height192{
+  height:192px;
+}
 .displayBlock{
   display: block !important;
 }
@@ -147,4 +150,10 @@ div.ReactTags__suggestions li mark {
 div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
     background: #b7cfe0;
     cursor: pointer;
+}
+.top0.38587{
+  top:0.38587px;
+}
+.top-6{
+  top:-6px;
 }

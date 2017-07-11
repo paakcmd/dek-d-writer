@@ -1,8 +1,8 @@
 
 const init_state = {
   users: {
-    id: '',
-    name: ''
+      id:'',
+      name:'',
   }
 }
 

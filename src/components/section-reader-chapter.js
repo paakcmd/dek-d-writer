@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
-import { Field, reduxForm, submit } from 'redux-form'
+import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
-import { saveChapter, clearRemoteSubmitTypeIdentify, clearRemoteSubmitReaderChapter, remoteSubmitReaderChapter } from '../actions/index'
+import { formHasBeenTouched, saveChapter, clearRemoteSubmitTypeIdentify, clearRemoteSubmitReaderChapter, remoteSubmitReaderChapter, openModalSetting } from '../actions/index'
 import { store } from './../store'
 class SectionReaderChapter extends Component {
   constructor (props) {
     super(props)
     this.state = { edittingTitle: 'No' }
-    // this.onSubmit = this.onSubmit.bind(this)
     this.componentWillUpdate = this.componentWillUpdate.bind(this)
   }
   componentWillUpdate (nextProps) {
@@ -58,11 +57,6 @@ class SectionReaderChapter extends Component {
     )
   }
 
-  // onSubmit (values) {
-  //   this.setState({ edittingTitle: 'No' })
-  //   this.props.saveChapter(values, this.props.readerChapterProps.chapterNumber)
-  // }
-
   sectionReaderChapterEdit () {
     if (this.state.edittingTitle === 'No') {
       this.setState({ edittingTitle: 'Yes' })
@@ -72,14 +66,16 @@ class SectionReaderChapter extends Component {
     console.log(this.props)
   }
   render () {
-    console.log('initvalue', this.props.initialValues)
+    
     const editClassName = ` ${this.state.edittingTitle === 'Yes' ? '' : 'edit'}`
-    const { handleSubmit } = this.props
+    const { handleSubmit, formHasbeenTouched } = this.props
+    console.log(formHasbeenTouched.touched)
     const chapter = this.props.readerChapterProps.novels.chapters[this.props.readerChapterProps.chapterNumber]
     const introNameClassName = `${this.props.readerChapterProps.chapterNumber === 0 ? 'section-reader-chapter displayNone' : 'section-reader-chapter'}`
     const introKumPloyClassName = `${this.props.readerChapterProps.chapterNumber === 0 ? 'section-reader-headbar' : 'displayNone section-reader-headbar'}`
     const codeBlockerClassName = `${this.props.readerChapterProps.novels.staticPublish.length > 0 ? 'code-blocker vertical-middle-wrapper displayNone' : 'code-blocker vertical-middle-wrapper'}`
     const cssFillerBlockClassName = `${this.props.readerChapterProps.chapterNumber === 0 ? '' : 'displayNone'}`
+    
     return (
       <div>
         <form onSubmit={(e) => {
@@ -96,6 +92,7 @@ class SectionReaderChapter extends Component {
                 <Field
                   name='name'
                   component={this.renderField}
+                  onChange={() => formHasbeenTouched.touched === 0 ? this.props.formHasBeenTouched(): ''}
                 />
 
                 <Field
@@ -124,7 +121,7 @@ class SectionReaderChapter extends Component {
           <div className='section-reader-content'>
             <div className={introKumPloyClassName}>
 
-              <div className='mainpage-description-wrapper story-header-factor editable-modal displayBlock' >
+              <div onClick={() => { this.props.openModalSetting()  }} className='mainpage-description-wrapper story-header-factor editable-modal displayBlock' >
                 <div className='story-img imgLiquid_bgSize imgLiquid_ready mainpage-description-wrapper-bgImg' >
                   <img className='thumb-img displayNone' src='https://www0.dek-d.com/assets/writer/images/tttt.gif' alt='รูปไอคอนบทความ' />
                 </div>
@@ -145,6 +142,7 @@ class SectionReaderChapter extends Component {
                 <Field
                   name='content'
                   component={this.renderField2}
+                  onChange={() => formHasbeenTouched.touched === 0 ? this.props.formHasBeenTouched(): ''}
                 />
 
               </div>
@@ -152,7 +150,7 @@ class SectionReaderChapter extends Component {
             <div className={cssFillerBlockClassName}>
               <div className='codearea-section'>
                 <div className='codearea-header-wrapper'>
-                  <div className='codearea-header'>ใส่โค้ดตกแต่งให้หน้าหลัก</div><button type="reset" className='btn-code-reset btn-raised btn-brown-red' onClick={() => { this.resetCSS() }}>reset โค้ด</button>
+                  <div className='codearea-header'>ใส่โค้ดตกแต่งให้หน้าหลัก</div><button type='reset' className='btn-code-reset btn-raised btn-brown-red' onClick={() => { this.resetCSS() }}>reset โค้ด</button>
                   <span className='code-advise float-right textAlignRight'>
                 *โค้ดจะไม่เป็น Draft และจะอัพเดททันที<br />
                 *ยกเลิกการใช้ &lt;script&gt; ทั้งหมดเพื่อความปลอดภัยของผู้เข้าชม
@@ -165,6 +163,7 @@ class SectionReaderChapter extends Component {
                     name='codearea'
                     component='textarea'
                     id='codearea'
+                    onChange={() => formHasbeenTouched.touched === 0 ? this.props.formHasBeenTouched(): ''}
                   />
 
                   <div className={codeBlockerClassName}>
@@ -196,7 +195,8 @@ function mapStateToProps (state, ownProps) {
       typeOfSubmit: state.remoteSubmit.typeOfSubmit,
       codearea: state.readerChapter.novels.css
     },
-    remoteSubmit: state.remoteSubmit
+    remoteSubmit: state.remoteSubmit,
+    formHasbeenTouched: state.formHasbeenTouched
   }
 }
 
@@ -210,4 +210,4 @@ const SectionReaderChapterReduxForm = reduxForm({
   enableReinitialize: true
 })(SectionReaderChapter)
 
-export default connect(mapStateToProps, { clearRemoteSubmitTypeIdentify, saveChapter, clearRemoteSubmitReaderChapter, remoteSubmitReaderChapter })(SectionReaderChapterReduxForm)
+export default connect(mapStateToProps, { formHasBeenTouched, clearRemoteSubmitTypeIdentify, saveChapter, clearRemoteSubmitReaderChapter, remoteSubmitReaderChapter, openModalSetting })(SectionReaderChapterReduxForm)

@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import { loadNovelList, selectNovelList } from '../../actions/index'
+import { loadNovelList, selectNovelList, remoteSubmitReaderChapter } from '../../actions/index'
 import { connect } from 'react-redux'
+import { submit } from 'redux-form'
+import { bindActionCreators } from 'redux'
 import _ from 'lodash'
 
 class SideNavHeader extends Component {
@@ -12,6 +14,13 @@ class SideNavHeader extends Component {
 
   handleChange (event) {
     this.setState({ selectedValue: event.target.value })
+    if (this.props.formHasbeenTouched.touched === 1) {
+      var r = confirm('คุณต้องการบันทึกสิ่งที่แก้ไขไปหรือไม่')
+      if (r) {
+        this.props.dispatch(submit('readerChapter'))
+        this.props.remoteSubmitReaderChapter()
+      }
+    }
     this.props.selectNovelList(event.target.value, this.props.currentNovel)
   }
 
@@ -26,9 +35,8 @@ class SideNavHeader extends Component {
       )
     })
   }
-  
+
   render () {
-    
     return (
       <div className='side-nav-header'>
         <a className='logo float-left' href='https://my.dek-d.com/dekdee/control/writer3/story-editor.php?story_id=d-423793&amp;chapter=-1'>
@@ -44,10 +52,21 @@ class SideNavHeader extends Component {
   }
 }
 
-function mapStateToProps ({ novelList, readerChapter }, ownProps) {
+function mapStateToProps ({ novelList, readerChapter, formHasbeenTouched }, ownProps) {
   return {
     novelList: novelList,
-    currentNovel: readerChapter
+    currentNovel: readerChapter,
+    formHasbeenTouched: formHasbeenTouched
   }
 }
-export default connect(mapStateToProps, { loadNovelList, selectNovelList })(SideNavHeader)
+
+function mapDispatchToProps (dispatch) {
+  return {
+    loadNovelList: bindActionCreators(loadNovelList, dispatch),
+    selectNovelList: bindActionCreators(selectNovelList, dispatch),
+    remoteSubmitReaderChapter:bindActionCreators(remoteSubmitReaderChapter, dispatch),
+    dispatch
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SideNavHeader)

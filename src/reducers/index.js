@@ -2,9 +2,11 @@ import { combineReducers } from 'redux'
 import readerChapterReducer from './reducer_novel'
 import novelList from './reducer_novelList'
 import remoteSubmit from './reducer_remoteSubmit'
-import checkNovelTitle from './reducer_checkNovelTItle'
+import checkNovelTitle from './reducer_checknoveltitle'
+import remoteOpenModal from './reducer_remoteopenmodal'
+import formHasbeenTouched from './reducer_formhasbeentouch'
 import user from './reducer_user'
-
+import sideCollapse from './reducer_sidecollapse'
 import { reducer as formReducer } from 'redux-form'
 
 const rootReducer = combineReducers({
@@ -13,7 +15,10 @@ const rootReducer = combineReducers({
   novelList: novelList,
   remoteSubmit: remoteSubmit,
   checkNovelTitle: checkNovelTitle,
-  user: user
+  remoteOpenModal: remoteOpenModal,
+  user: user,
+  sideCollapse: sideCollapse,
+  formHasbeenTouched: formHasbeenTouched
 })
 
 export default rootReducer
