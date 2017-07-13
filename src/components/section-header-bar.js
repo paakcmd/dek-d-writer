@@ -136,7 +136,6 @@ class SectionHeaderBar extends Component {
         border: 'none'
       }
     }
-    console.log(this.props.remoteOpenModal)
     const { readerChapterProps, checkNovel } = this.props
     const title = readerChapterProps.novels.novelTitle
     const statusNovelTitleClassName = `${checkNovel.novelTitleStatus === 'available' ? 'secction-col status-handle state-available' : 'secction-col status-handle  state-error '}`
@@ -154,6 +153,7 @@ class SectionHeaderBar extends Component {
           isOpen={this.state.modalIsOpen}
           onRequestClose={this.closeModal}
           style={modalStyles}
+          contentLabel="Modal"
         >
           <div id='modal-story-settings' className='app-modal modal fixed-footer hide fade in displayBlock'>
             <form onSubmit={this.props.handleSubmit(this.onSubmit)} className='form-story-settings' acceptCharset='UTF-8'>

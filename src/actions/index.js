@@ -24,6 +24,7 @@ export const AUTO_SAVE = 'auto_save'
 export const SAVE_CHAPTERNAME = 'save_chaptername'
 export const CLEAR_PUBANDSUB = 'clear_pubandsub'
 export const SET_PUBANDSUB = 'set_pubandsub'
+export const CLEAR_NOTISAVE = 'clear_notisave'
 // Mock up information
 
 const novelList = {
@@ -161,7 +162,6 @@ export function saveChapter (value) {
   // return updated timestamp for each novel
 
   // validate status with server then tell users if saving success or fail
-  alert('saved')
   const objectEdit =
     {
       value: value,
@@ -357,5 +357,11 @@ export function setPubandSub () {
 export function clearPubandSub () {
   return {
     type: CLEAR_PUBANDSUB
+  }
+}
+
+export function clearNotiSave () {
+  return {
+    type: CLEAR_NOTISAVE
   }
 }

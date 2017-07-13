@@ -35,7 +35,6 @@ class Header extends Component {
     if ( nextProps.readerChapterProps.saveDone === 1 && this.props.remoteSubmit.publishandsubmit === 1){
       this.props.publishChapter(this.props.readerChapterProps.novelId, this.props.readerChapterProps.chapterNumber)
     }
-
   }
   openModal () {
     this.setState({ modalIsOpen: true })
@@ -48,17 +47,12 @@ class Header extends Component {
   }
   allowPublish (novelId, chapterNumber) {
     this.props.setPubandSub()
-    
-    // this.props.publishChapter(novelId, chapterNumber)
     this.closeModal()
   }
   onPublish (novelId, chapterNumber) {
 
     if (this.props.readerChapterProps.novels.staticPublish.length > 0) {
       this.props.setPubandSub()
-      // this.props.dispatch(submit('readerChapter'))
-      // this.props.remoteSubmitReaderChapter()
-      // this.props.publishChapter(novelId, chapterNumber)
 
     } else {
       this.openModal()
@@ -90,6 +84,7 @@ class Header extends Component {
           isOpen={this.state.modalIsOpen}
           onRequestClose={this.closeModal}
           style={modalStyles}
+          contentLabel="Modal"
         >
           <div id='modal-agreement' className='app-modal modal fixed-footer hide fade in displayBlock' aria-hidden='false'>
             <div className='modal-header'>
@@ -341,7 +336,7 @@ function mapStateToProps (state, ownProps) {
   return {
     readerChapterProps: state.readerChapter,
     remoteSubmit: state.remoteSubmit,
-    publish: state.publish
+    notification: state.notification
 
   }
 }
