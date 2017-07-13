@@ -64,7 +64,7 @@ function mapDispatchToProps (dispatch) {
   return {
     loadNovelList: bindActionCreators(loadNovelList, dispatch),
     selectNovelList: bindActionCreators(selectNovelList, dispatch),
-    remoteSubmitReaderChapter:bindActionCreators(remoteSubmitReaderChapter, dispatch),
+    remoteSubmitReaderChapter: bindActionCreators(remoteSubmitReaderChapter, dispatch),
     dispatch
   }
 }

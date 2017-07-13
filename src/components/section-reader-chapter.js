@@ -7,10 +7,10 @@ class SectionReaderChapter extends Component {
   constructor (props) {
     super(props)
     this.state = { edittingTitle: 'No' }
-    this.componentWillUpdate = this.componentWillUpdate.bind(this)
+    this.componentDidUpdate = this.componentDidUpdate.bind(this)
   }
-  componentWillUpdate (nextProps) {
-    if (this.props.remoteSubmit.readerChapter === 0 && nextProps.remoteSubmit.readerChapter === 1) {
+  componentDidUpdate (prevProps) {
+    if (this.props.remoteSubmit.readerChapter === 1 && prevProps.remoteSubmit.readerChapter === 0) {
       this.setState(() => ({ edittingTitle: 'No' }))
       this.props.clearRemoteSubmitReaderChapter()
     }
@@ -66,16 +66,14 @@ class SectionReaderChapter extends Component {
     console.log(this.props)
   }
   render () {
-    
     const editClassName = ` ${this.state.edittingTitle === 'Yes' ? '' : 'edit'}`
     const { handleSubmit, formHasbeenTouched } = this.props
-    console.log(formHasbeenTouched.touched)
     const chapter = this.props.readerChapterProps.novels.chapters[this.props.readerChapterProps.chapterNumber]
     const introNameClassName = `${this.props.readerChapterProps.chapterNumber === 0 ? 'section-reader-chapter displayNone' : 'section-reader-chapter'}`
     const introKumPloyClassName = `${this.props.readerChapterProps.chapterNumber === 0 ? 'section-reader-headbar' : 'displayNone section-reader-headbar'}`
     const codeBlockerClassName = `${this.props.readerChapterProps.novels.staticPublish.length > 0 ? 'code-blocker vertical-middle-wrapper displayNone' : 'code-blocker vertical-middle-wrapper'}`
     const cssFillerBlockClassName = `${this.props.readerChapterProps.chapterNumber === 0 ? '' : 'displayNone'}`
-    
+    const abstractOrChapterClassName2 = `${this.props.readerChapterProps.chapterNumber === 0 ? 'displayNone' : 'displayBlock'}`
     return (
       <div>
         <form onSubmit={(e) => {
@@ -108,13 +106,15 @@ class SectionReaderChapter extends Component {
                 />
 
                 <Field
-                  name='typeOfSubmit'
+                  name='publishandsubmit'
                   component='input'
                   type='hidden'
                 />
                 <button type='submit' className='displayNone'>Submit</button>
+
               </div>
             </div>
+            
             <div className='last-update'>Chapter update : 14 มิ.ย. 2560</div>
 
           </div>
@@ -173,6 +173,25 @@ class SectionReaderChapter extends Component {
               </div>
             </div>
           </div>
+          <div className={abstractOrChapterClassName2}>
+        <div className='section-reader-bottom-chapter' >
+          <div className='chapter-name-wrapper editable' onClick={this.sectionReaderChapterEdit.bind(this)}>
+            <span className='chapter-count'>ตอนที่ <span className='val'>{this.props.readerChapterProps.chapterNumber }</span> : </span>
+            <span className='chapter-name hide-on-edit edit-target'>{chapter ? chapter.name : 'ยังไม่มีชื่อเรื่อง'}</span>
+            <div className={editClassName}>
+              <Field
+                  name='name'
+                  component={this.renderField}
+                  onChange={() => formHasbeenTouched.touched === 0 ? this.props.formHasBeenTouched(): ''}
+                />
+              <button type='submit' className='displayNone'>Submit</button>
+
+            </div>
+          </div>
+
+          <div className='last-update'>Chapter update : 14 มิ.ย. 2560</div>
+        </div>
+      </div>
         </form>
       </div>
 
@@ -192,7 +211,7 @@ function mapStateToProps (state, ownProps) {
       ...state.readerChapter.novels.chapters[state.readerChapter.chapterNumber],
       index: state.readerChapter.chapterNumber,
       novel: state.readerChapter.novelId,
-      typeOfSubmit: state.remoteSubmit.typeOfSubmit,
+      publishandsubmit: state.readerChapter.publishandsubmit,
       codearea: state.readerChapter.novels.css
     },
     remoteSubmit: state.remoteSubmit,

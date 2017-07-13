@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default ({ cName }) => {
+export default ({ cName, chapters }) => {
   return (
     <div className={cName}>
       <div className='section-reader-bottombar'>
@@ -9,18 +9,29 @@ export default ({ cName }) => {
         </div>
         <div className='chapter-index-wrapper displayBlock' >
           <table className='chapter-index-table'>
-            <tbody>
+            <thead>
               <tr className='table-header'>
                 <th className='table-header-item col-chapter-count'>ตอน</th>
                 <th className='table-header-item col-chapter-name'>ชื่อตอน</th>
                 <th className='table-header-item col-chapter-update'>อัพเดท</th>
               </tr>
+            </thead>
+            <tbody>
               <tr className='first-row-margin' />
-              <tr className='table-row'>
-                <td className='table-col col-chapter-count'>1</td>
-                <td className='table-col col-chapter-name'>ตอนที่ยังไม่ได้ตั้งชื่อ</td>
-                <td className='table-col col-chapter-update'>14 มิ.ย. 2560</td>
-              </tr>
+              {chapters.length > 0
+                ? chapters.map((chapter, index) => {
+                  if (index === 0) {
+                    return null
+                  }
+                  return (
+                    <tr className='table-row' key={index}>
+                      <td className='table-col col-chapter-count'>{index}</td>
+                      <td className='table-col col-chapter-name'>{chapter.name === '' ? 'ตอนที่ยังไม่ตั้งชื่อ' : chapter.name}</td>
+                      <td className='table-col col-chapter-update'>14 มิ.ย. 2560</td>
+                    </tr>
+                  )
+                }) : null
+              }
             </tbody>
           </table>
         </div>

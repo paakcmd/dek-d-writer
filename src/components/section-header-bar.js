@@ -136,7 +136,7 @@ class SectionHeaderBar extends Component {
         border: 'none'
       }
     }
-
+    console.log(this.props.remoteOpenModal)
     const { readerChapterProps, checkNovel } = this.props
     const title = readerChapterProps.novels.novelTitle
     const statusNovelTitleClassName = `${checkNovel.novelTitleStatus === 'available' ? 'secction-col status-handle state-available' : 'secction-col status-handle  state-error '}`

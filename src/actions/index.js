@@ -20,6 +20,10 @@ export const OPENMODAL_SETTING = 'openmodal_setting'
 export const CLEARMODAL_SETTING = 'clearmodal_setting'
 export const SIDE_COLLAPSE = 'side_collapse'
 export const FORM_HASBEENTOUCHED = 'form_hasbeentouched'
+export const AUTO_SAVE = 'auto_save'
+export const SAVE_CHAPTERNAME = 'save_chaptername'
+export const CLEAR_PUBANDSUB = 'clear_pubandsub'
+export const SET_PUBANDSUB = 'set_pubandsub'
 // Mock up information
 
 const novelList = {
@@ -30,9 +34,9 @@ const novelList = {
     novelId: 1,
     novelTitle: 'Example1'
   }, {
-      novelId: 2,
-      novelTitle: 'Example2'
-    }, {
+    novelId: 2,
+    novelTitle: 'Example2'
+  }, {
       novelId: 3,
       novelTitle: 'Example3'
     }, {
@@ -47,6 +51,7 @@ localStorage.setItem('novelList', JSON.stringify(novelList))
 const novels = [
   {
     novelId: 0,
+    autoSave: 0,
     chapterNumber: 0,
     overAllLastUpdate: '',
     novels: {
@@ -63,6 +68,7 @@ const novels = [
   },
   {
     novelId: 1,
+    autoSave: 0,
     chapterNumber: 0,
     novels: {
       novelTitle: 'Example1',
@@ -78,6 +84,7 @@ const novels = [
   },
   {
     novelId: 2,
+    autoSave: 0,
     chapterNumber: 0,
     novels: {
       novelTitle: 'Example2',
@@ -93,6 +100,7 @@ const novels = [
   },
   {
     novelId: 3,
+    autoSave: 0,
     chapterNumber: 0,
     novels: {
       novelTitle: 'Example3',
@@ -108,6 +116,7 @@ const novels = [
   },
   {
     novelId: 4,
+    autoSave: 0,
     chapterNumber: 0,
     novels: {
       novelTitle: 'Example4',
@@ -126,7 +135,6 @@ const novels = [
 localStorage.setItem('novels', JSON.stringify(novels))
 
 export function saveChapter (value) {
-  console.log('savechapter', value)
   const novels = JSON.parse(localStorage.getItem('novels'))
   const chapter = { name: value.name, content: value.content }
   const chapterIndex = value.index
@@ -137,10 +145,13 @@ export function saveChapter (value) {
     alert('โปรด Publish ก่อนใส่ CSS ')
     return ''
   }
+
   var newPub = ''
+  // check if publish here
   if (Object.values(novels[value.novel].novels.publish).indexOf(value.index) > -1) {
     const oldPub = novels[value.novel].novels.publish
     const index = oldPub.indexOf(chapterIndex)
+    
     newPub = oldPub
     newPub.splice(index, 1)
     novels[value.novel].novels.publish = newPub
@@ -218,7 +229,6 @@ export function loadNovel () {
 export function loadNovelList () {
   // load novelList from db
   const novelList = JSON.parse(localStorage.getItem('novelList'))
-  console.log(novelList)
 
   return {
     type: LOAD_NOVELLIST,
@@ -232,7 +242,7 @@ export function selectNovelList (novelId, currentNovel) {
 
   const novelIdInt = parseInt(novelId)
   const novel = _.find(novels, { 'novelId': novelIdInt })
-  
+
   return {
     type: SELECT_NOVELLIST,
     payload: novel
@@ -266,7 +276,6 @@ export function clearRemoteSubmitReaderChapter () {
 export function publishChapter (novelId, chapterId) {
   const obj = { chapterId: chapterId, novelId: novelId }
   const novels = JSON.parse(localStorage.getItem('novels'))
-
   if (chapterId === 1 || chapterId === 0) {
     if (!(Object.values(novels[novelId].novels.publish).indexOf(chapterId) > -1)) {
       novels[novelId].novels.publish.push(chapterId)
@@ -292,6 +301,7 @@ export function publishChapter (novelId, chapterId) {
       }
     }
   }
+
 
   return {
     type: PUBLISH_CHAPTER,
@@ -330,5 +340,22 @@ export function sideCollapse () {
 export function formHasBeenTouched () {
   return {
     type: FORM_HASBEENTOUCHED
+  }
+}
+
+export function autoSave () {
+  return {
+    type: AUTO_SAVE
+  }
+}
+
+export function setPubandSub () {
+  return {
+    type: SET_PUBANDSUB
+  }
+}
+export function clearPubandSub () {
+  return {
+    type: CLEAR_PUBANDSUB
   }
 }

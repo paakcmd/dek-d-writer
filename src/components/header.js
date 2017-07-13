@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { submit } from 'redux-form'
-import { remoteSubmitReaderChapter, publishChapter, remoteSubmitTypeIdentify } from '../actions/index'
+import { setPubandSub, clearPubandSub, autoSave, remoteSubmitReaderChapter, publishChapter, remoteSubmitTypeIdentify } from '../actions/index'
 import { bindActionCreators } from 'redux'
 import Modal from 'react-modal'
+import SwitchButton from 'react-switch-button'
+
 
 class Header extends Component {
   constructor () {
@@ -17,20 +19,47 @@ class Header extends Component {
 
     this.closeModal = this.closeModal.bind(this)
   }
+  componentDidUpdate (prevProps) {
+    if (prevProps.readerChapterProps.autoSave === 0 && this.props.readerChapterProps.autoSave === 1) {
+      window.interval = setInterval(()=> { this.props.dispatch(submit('readerChapter')) }, 5000)
+    }
+    if (prevProps.readerChapterProps.autoSave === 1 && this.props.readerChapterProps.autoSave === 0) {
+      clearInterval(window.interval)
+    }
+  }
+  componentWillUpdate(nextProps) {
+    if (this.props.remoteSubmit.publishandsubmit === 0 && nextProps.remoteSubmit.publishandsubmit === 1){
+      this.props.dispatch(submit('readerChapter'))
+      this.props.remoteSubmitReaderChapter()
+    }
+    if ( nextProps.readerChapterProps.saveDone === 1 && this.props.remoteSubmit.publishandsubmit === 1){
+      this.props.publishChapter(this.props.readerChapterProps.novelId, this.props.readerChapterProps.chapterNumber)
+    }
+
+  }
   openModal () {
     this.setState({ modalIsOpen: true })
   }
-
+  onAutoSave () {
+    this.props.autoSave()
+  }
   closeModal () {
     this.setState({ modalIsOpen: false })
   }
   allowPublish (novelId, chapterNumber) {
-    this.props.publishChapter(novelId, chapterNumber)
+    this.props.setPubandSub()
+    
+    // this.props.publishChapter(novelId, chapterNumber)
     this.closeModal()
   }
   onPublish (novelId, chapterNumber) {
+
     if (this.props.readerChapterProps.novels.staticPublish.length > 0) {
-      this.props.publishChapter(novelId, chapterNumber)
+      this.props.setPubandSub()
+      // this.props.dispatch(submit('readerChapter'))
+      // this.props.remoteSubmitReaderChapter()
+      // this.props.publishChapter(novelId, chapterNumber)
+
     } else {
       this.openModal()
     }
@@ -40,7 +69,6 @@ class Header extends Component {
     const headerWrapperClassName = `${Object.values(novel.novels.publish).indexOf(novel.chapterNumber) > -1 ? ' state-published' : 'state-draft'}`
     const headerInsideClassName = `${Object.values(novel.novels.staticPublish).indexOf(novel.chapterNumber) > -1 ? 'btn-action-wrapper float-right is-public' : 'btn-action-wrapper float-right '}`
     const headerTitleClassName = `${Object.values(novel.novels.publish).indexOf(novel.chapterNumber) > -1 ? ' current-chapter-header chapter-state txt-ellipsis state-published' : 'current-chapter-header chapter-state txt-ellipsis state-draft'}`
-    
     const modalStyles = {
       content: {
         top: '50%',
@@ -297,13 +325,10 @@ class Header extends Component {
             <button type='button' onClick={() => { this.onPublish(novel.novelId, novel.chapterNumber) }} className='btn-action-publish btn-action btn-raised btn-orange-theme'><i className='fa fa-globe' /> บันทึกและเผยแพร่</button>
 
             <div className='action-autosave-wrapper'>
-              <span className='label-txt' title='บันทึกอัตโนมัติ ทุกๆ 2 นาที'>บันทึกอัตโนมัติ : </span>
-              <label className='switch switch-green autosave-toggle-switch' title='เปิด/ปิด การบันทึกอัตโนมัติ'>
-                <input type='checkbox' className='switch-input js-autosave-story' checked='' />
-                <span className='switch-label' data-on='เปิด' data-off='ปิด' />
-                <span className='switch-handle' />
-              </label>
+              <SwitchButton onChange={() => this.onAutoSave()} className='switch-green' name='switch-3' label='บันทึกอัตโนมัติ :' defaultChecked={false} />
+
             </div>
+
           </div>
           <div className={headerTitleClassName} title='ข้อมูลเบื้องต้นของเรื่องนี้'>{this.props.readerChapterProps.novels.chapters[this.props.readerChapterProps.chapterNumber].name}</div>
         </div>
@@ -326,6 +351,9 @@ function mapDispatchToProps (dispatch) {
     publishChapter: bindActionCreators(publishChapter, dispatch),
     remoteSubmitReaderChapter: bindActionCreators(remoteSubmitReaderChapter, dispatch),
     remoteSubmitTypeIdentify: bindActionCreators(remoteSubmitTypeIdentify, dispatch),
+    autoSave: bindActionCreators(autoSave, dispatch),
+    setPubandSub: bindActionCreators(setPubandSub, dispatch),
+    clearPubandSub: bindActionCreators(clearPubandSub, dispatch),
     dispatch
   }
 }

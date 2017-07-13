@@ -1,8 +1,9 @@
-import { CLEARREMOTESUBMIT_TYPEIDENTIFY, CLEARREMOTESUBMIT_READERCHAPTER, REMOTESUBMIT_READERCHAPTER, REMOTESUBMIT_TYPEIDENTIFY } from '../actions/index'
+import { SET_PUBANDSUB, CLEAR_PUBANDSUB, PUBLISH_CHAPTER, CLEARREMOTESUBMIT_TYPEIDENTIFY, CLEARREMOTESUBMIT_READERCHAPTER, REMOTESUBMIT_READERCHAPTER, REMOTESUBMIT_TYPEIDENTIFY } from '../actions/index'
 
 const init = {
   readerChapter: 0,
-  typeOfSubmit: ''
+  typeOfSubmit: '',
+  publishandsubmit: 0
 }
 
 export default function (state = init, action) {
@@ -15,6 +16,10 @@ export default function (state = init, action) {
       return { ...state, typeOfSubmit: action.payload }
     case CLEARREMOTESUBMIT_TYPEIDENTIFY:
       return { ...state, typeOfSubmit: '' }
+    case SET_PUBANDSUB:
+      return { ...state, publishandsubmit: 1 }
+    case PUBLISH_CHAPTER:
+      return { ...state, publishandsubmit: 0 }
   }
   return state
 }

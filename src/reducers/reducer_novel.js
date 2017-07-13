@@ -1,6 +1,9 @@
-import { UPDATENOVEL_FROMMODAL, PUBLISH_CHAPTER, SELECT_NOVELLIST, CREATE_CHAPTER, LOAD_NOVEL, SELECT_CHAPTER, SAVE_CHAPTER } from '../actions/index'
+import { CLEAR_PUBANDSUB, AUTO_SAVE, UPDATENOVEL_FROMMODAL, PUBLISH_CHAPTER, SELECT_NOVELLIST, CREATE_CHAPTER, LOAD_NOVEL, SELECT_CHAPTER, SAVE_CHAPTER } from '../actions/index'
 
 const init_state = {
+  reRender: 0,
+  saveDone: 0,
+  autoSave: 0,
   novelId: 0,
   chapterNumber: 0,
   overAllLastUpdate: '',
@@ -24,9 +27,15 @@ export default function (state = init_state, action) {
     case CREATE_CHAPTER:
       const newChapters = [...state.novels.chapters, action.payload]
       return { ...state, novels: { ...state.novels, chapters: newChapters } }
-
     case SELECT_CHAPTER:
       return { ...state, chapterNumber: action.payload }
+    case AUTO_SAVE:
+      if (state.autoSave === 0) {
+        return { ...state, autoSave: 1 }
+      }
+      if (state.autoSave === 1) {
+        return { ...state, autoSave: 0 }
+      }
 
     case SAVE_CHAPTER:
       const updateChapter = { name: action.payload.value.name, content: action.payload.value.content }
@@ -38,7 +47,7 @@ export default function (state = init_state, action) {
       }
       state = { ...state, novels: { ...state.novels, chapters: previousChapter } }
       state = { ...state, novels: { ...state.novels, codearea: action.payload.value.codearea } }
-      return state
+      return { ...state, saveDone: 1 }
 
     case SELECT_NOVELLIST:
       return action.payload
@@ -51,26 +60,22 @@ export default function (state = init_state, action) {
     case PUBLISH_CHAPTER:
       const prevPublish = [...state.novels.publish]
       const prevStaticPublish = [...state.novels.staticPublish]
+      state =  { ...state, saveDone: 0 } 
       if (action.payload.chapterId === 1 || action.payload.chapterId === 0) {
         if (Object.values(prevStaticPublish).indexOf(action.payload.chapterId) === -1) {
           prevStaticPublish.push(action.payload.chapterId)
           state = { ...state, novels: { ...state.novels, staticPublish: prevStaticPublish } }
         }
-        if (Object.values(prevPublish).indexOf(action.payload.chapterId) > -1) {
-          return state
-        } else {
+        if (Object.values(prevPublish).indexOf(action.payload.chapterId) === -1) {
           prevPublish.push(action.payload.chapterId)
-          return { ...state, novels: { ...state.novels, publish: prevPublish } }
+          return { ...state, novels: { ...state.novels, publish: prevPublish } } 
         }
       } else {
         if (Object.values(prevStaticPublish).indexOf(action.payload.chapterId) === -1 && Object.values(prevStaticPublish).indexOf(action.payload.chapterId - 1) > -1) {
           prevStaticPublish.push(action.payload.chapterId)
           state = { ...state, novels: { ...state.novels, staticPublish: prevStaticPublish } }
         }
-        if (Object.values(prevPublish).indexOf(action.payload.chapterId) > -1) {
-          return state
-        }
-        if (Object.values(prevPublish).indexOf(action.payload.chapterId) === -1 && Object.values(prevPublish).indexOf(action.payload.chapterId - 1) > -1) {
+        if (Object.values(prevPublish).indexOf(action.payload.chapterId) === -1 && Object.values(prevStaticPublish).indexOf(action.payload.chapterId - 1) > -1) {
           prevPublish.push(action.payload.chapterId)
           return { ...state, novels: { ...state.novels, publish: prevPublish } }
         }
