@@ -109,7 +109,6 @@ class SectionHeaderBar extends Component {
         values = { ...values, category: this.state.category }
         this.props.updateNovelFromModal(values)
         this.props.loadNovelList()
-        alert('submitted')
         this.closeModal()
       }
     } else if (this.props.checkNovel.novelTitleStatus === 'unavailable') {
@@ -305,11 +304,13 @@ class SectionHeaderBar extends Component {
                           </div>
                           <div className='section-row story-tags'>
                             <span className='section-col label-txt'>Tags : </span>
+                            <div style={{width:'300px',display:'inline-block'}}>
                             <ReactTags tags={this.state.tags}
                               handleDelete={this.handleDelete}
                               handleAddition={this.handleAddition}
                               handleDrag={this.handleDrag}
                             />
+                            </div>
                             <span className='section-col label-txt' />
                             <span className='secction-col status-handle'>*กด Enter เพื่อใส่ tag ตัวต่อไป<br />ยกตัวอย่างเช่น ลูก (Enter) ภรรยา (Enter) หัวใจ (Enter) แอบรัก </span>
                           </div>

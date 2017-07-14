@@ -1,4 +1,4 @@
-import { CLEAR_PUBANDSUB, AUTO_SAVE, UPDATENOVEL_FROMMODAL, PUBLISH_CHAPTER, SELECT_NOVELLIST, CREATE_CHAPTER, LOAD_NOVEL, SELECT_CHAPTER, SAVE_CHAPTER } from '../actions/index'
+import { PUBLISH_PREVIOUS_CHAPTER, CLEAR_PUBANDSUB, AUTO_SAVE, UPDATENOVEL_FROMMODAL, PUBLISH_CHAPTER, SELECT_NOVELLIST, CREATE_CHAPTER, LOAD_NOVEL, SELECT_CHAPTER, SAVE_CHAPTER } from '../actions/index'
 
 const init_state = {
   reRender: 0,
@@ -46,12 +46,13 @@ export default function (state = init_state, action) {
         state = { ...state, novels: { ...state.novels, publish: action.payload.newPub } }
       }
       state = { ...state, novels: { ...state.novels, chapters: previousChapter } }
-      state = { ...state, novels: { ...state.novels, codearea: action.payload.value.codearea } }
+      state = { ...state, novels: { ...state.novels, css: action.payload.value.codearea } }
       return { ...state, saveDone: 1 }
 
     case SELECT_NOVELLIST:
       return action.payload
-
+    case PUBLISH_PREVIOUS_CHAPTER:
+      return { ...state, saveDone: 0 } 
     case UPDATENOVEL_FROMMODAL:
       state = { ...state, novels: { ...state.novels, novelTitle: action.payload.novelTitle } }
       state = { ...state, novels: { ...state.novels, abstract: action.payload.abstract } }

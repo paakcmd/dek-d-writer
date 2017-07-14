@@ -325,7 +325,7 @@ class Header extends Component {
             </div>
 
           </div>
-          <div className={headerTitleClassName} title='ข้อมูลเบื้องต้นของเรื่องนี้'>{this.props.readerChapterProps.novels.chapters[this.props.readerChapterProps.chapterNumber].name}</div>
+          <div className={headerTitleClassName} title='ข้อมูลเบื้องต้นของเรื่องนี้'>{this.props.readerChapterProps.novels.chapters[this.props.readerChapterProps.chapterNumber].name ? this.props.readerChapterProps.novels.chapters[this.props.readerChapterProps.chapterNumber].name : 'ตอนที่ยังไม่ได้ตั้งชื่อ'}</div>
         </div>
 
       </div>

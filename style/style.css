@@ -386,3 +386,16 @@ div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
 .rsbc-switch-button.rsbc-switch-button.rsbc-switch-button-flat-square.rsbc-mode-select input[type="checkbox"] + label {
   background-color: #8BC321 !important;
 }
+.mockupToolBar{
+  height:36px;
+  background-color:#E5E5E5;
+  margin-top:47px;
+  box-shadow: 0 6px 10px 0 rgba(0,0,0,.3), 0 2px 2px 0 rgba(0,0,0,.2);
+  width:100%;
+  position: fixed;
+  left:250px;
+  z-index: 2;
+}
+.action-autosave-wrapper{
+  z-index:350;
+}

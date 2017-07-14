@@ -25,6 +25,9 @@ export const SAVE_CHAPTERNAME = 'save_chaptername'
 export const CLEAR_PUBANDSUB = 'clear_pubandsub'
 export const SET_PUBANDSUB = 'set_pubandsub'
 export const CLEAR_NOTISAVE = 'clear_notisave'
+export const CLEAR_PUBLISH = 'clear_publish'
+export const PUBLISH_PREVIOUS_CHAPTER = 'publish_previous_chapter'
+export const CLEAR_PUBLISH_PREVIOUS_CHAPTER = 'clear_publish_previous_chapter'
 // Mock up information
 
 const novelList = {
@@ -295,9 +298,11 @@ export function publishChapter (novelId, chapterId) {
       localStorage.setItem('novels', JSON.stringify(novels))
     } else {
       if ((Object.values(novels[novelId].novels.staticPublish).indexOf(chapterId) > -1)) {
-        // already published
+        // need to publish previous chapter
       } else {
-        alert('Please publish previous chapter (start from chapter 1)')
+        return {
+          type: PUBLISH_PREVIOUS_CHAPTER
+        }
       }
     }
   }
@@ -363,5 +368,17 @@ export function clearPubandSub () {
 export function clearNotiSave () {
   return {
     type: CLEAR_NOTISAVE
+  }
+}
+
+export function clearPublish () {
+  return {
+    type: CLEAR_PUBLISH
+  }
+}
+
+export function clearPublishPreviousChapter () {
+  return {
+    type: CLEAR_PUBLISH_PREVIOUS_CHAPTER
   }
 }

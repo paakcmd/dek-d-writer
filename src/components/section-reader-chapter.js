@@ -84,7 +84,7 @@ class SectionReaderChapter extends Component {
           <div className={introNameClassName} >
             <div className='chapter-name-wrapper editable' onClick={this.sectionReaderChapterEdit.bind(this)}>
               <span className='chapter-count'>ตอนที่ <span className='val'>{this.props.readerChapterProps.chapterNumber }</span> : </span>
-              <span className='chapter-name hide-on-edit edit-target'>{chapter ? chapter.name : 'ยังไม่มีชื่อเรื่อง'}</span>
+              <span className='chapter-name hide-on-edit edit-target'>{chapter.name ? chapter.name : 'ตอนที่ยังไม่ได้ตั้งชื่อ'}</span>
               <div className={editClassName}>
 
                 <Field
@@ -177,7 +177,7 @@ class SectionReaderChapter extends Component {
         <div className='section-reader-bottom-chapter' >
           <div className='chapter-name-wrapper editable' onClick={this.sectionReaderChapterEdit.bind(this)}>
             <span className='chapter-count'>ตอนที่ <span className='val'>{this.props.readerChapterProps.chapterNumber }</span> : </span>
-            <span className='chapter-name hide-on-edit edit-target'>{chapter ? chapter.name : 'ยังไม่มีชื่อเรื่อง'}</span>
+            <span className='chapter-name hide-on-edit edit-target'>{chapter.name ? chapter.name : 'ตอนที่ยังไม่ได้ตั้งชื่อ'}</span>
             <div className={editClassName}>
               <Field
                   name='name'
