@@ -46,7 +46,7 @@ class SideNavList extends Component {
           </div>
         </div>
         <div className='chapter-li-section all-chapter-header'>
-          <a className='btn-add-chapter' onClick={() => this.props.createChapter(this.props.readerChapterProps.novelId)}>+ เพิ่มตอน</a>
+          <a className='btn-add-chapter' onClick={() => { this.props.createChapter(this.props.readerChapterProps.novelId); this.props.selectChapter(this.props.readerChapterProps.novels.chapters.length)} }>+ เพิ่มตอน</a>
           <div className='chapter-count'>ตอนทั้งหมด <span className='badge'>{chapters.length -1 }</span></div>
         </div>
         <div className='chapter-li-section section-all-chapter'>
@@ -72,7 +72,7 @@ class SideNavList extends Component {
                                 return ''
                               }
                               return (
-                                <div key={index} onClick={() => this.onSelectChapter(index)}id='chapter-1' className={wrapperChapterListClassName} data-chapter='1'>
+                                <div key={index} onClick={() => this.onSelectChapter(index)} id='chapter-1' className={wrapperChapterListClassName} data-chapter='1'>
                                   <a className={chapterListClassName} title='ตอนที่ยังไม่ได้ตั้งชื่อ'>
                                     <span className='chapter-name'>#{index } | {chapter.name.length > 0 ? chapter.name : 'ตอนที่ยังไม่ได้ตั้งชื่อ'}</span>
                                     <span className='link-chapter' title='เปิดหน้าอ่านนิยาย'>

@@ -132,7 +132,8 @@ class SectionHeaderBar extends Component {
         width: '50%',
         height: '70%',
         background: 'none',
-        border: 'none'
+        border: 'none',
+        zIndex:999
       }
     }
     const { readerChapterProps, checkNovel } = this.props

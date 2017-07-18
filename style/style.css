@@ -82,6 +82,9 @@
 div.ReactTags__tags {
     position: relative;
 }
+div.ReactTags__selected span.ReactTags__tag{
+  margin-left:0px !important;
+}
 
 /* Styles for the input */
 div.ReactTags__tagInput {
@@ -398,4 +401,7 @@ div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
 }
 .action-autosave-wrapper{
   z-index:350;
+}
+.ReactModal__Overlay, ReactModal__Overlay--after-open{
+  z-index: 9999 !important;
 }
