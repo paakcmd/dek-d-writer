@@ -4,8 +4,9 @@ import SideNav from './side-nav/index'
 import SectionContent from '../containers/section-content'
 import Notification from './notification'
 import { connect } from 'react-redux'
-class App extends Component {
 
+
+export default class App extends Component {
   render () {
     const pageWrapperClassName = `${this.props.sideCollapse.sideCollapse === 0 ? 'page-wrapper' : 'page-wrapper -side-collapse'}`
 
@@ -23,9 +24,4 @@ class App extends Component {
   }
 }
 
-function mapStateToProps (state, ownProps) {
-  return {
-    sideCollapse: state.sideCollapse,
-  }
-}
-export default connect(mapStateToProps)(App)
+
