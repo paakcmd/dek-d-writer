@@ -27,7 +27,7 @@ class SideNavList extends Component {
 
     const { novels } = this.props.readerChapterProps
     const { chapters } = novels
-    
+
     const introNovelWrapperClassName = `${novels.staticPublish.length > 0 ? 'is-public chapter-wrapper' : 'chapter-wrapper'}`
     var introNovelClassName = `${novels.staticPublish.length > 0 ? 'chapter-item chapter-state content-mainpage list-chapter-0 state-published' : 'chapter-item chapter-state content-mainpage list-chapter-0  state-draft'}`
     if(this.props.readerChapterProps.chapterNumber === 0){
@@ -51,20 +51,20 @@ class SideNavList extends Component {
         </div>
         <div className='chapter-li-section section-all-chapter'>
           <div className='tiny-scroll-wrapper '>
-            <div className='scrollbar disable height405'><div className='track height405' >
-              <div className='thumb top0 height50' >
+            <div className='scrollbar disable' style={{height:405}}><div style={{height:405}} className='track' >
+              <div style={{height:50, top:0}} className='thumb' >
                 <div className='end' />
               </div>
             </div>
             </div>
-            <div className='viewport height405'>
-              <div className='js-tinyscroll overview top0' >
+            <div style={{height:405}} className='viewport'>
+              <div style={{top:0}} className='js-tinyscroll overview' >
                 {chapters.length > 0
 
                             ? chapters.map((chapter, index) => {
                               const wrapperChapterListClassName = `${Object.values(novels.publish).indexOf(index) > -1 ? 'is-public chapter-wrapper' : 'chapter-wrapper'}`
                               var chapterListClassName = `${Object.values(novels.publish).indexOf(index) > -1 ? 'chapter-item chapter-state content-mainpage state-published' : 'chapter-item chapter-state content-mainpage state-draft'}`
-                              
+
                               if(this.props.readerChapterProps.chapterNumber === index){
                                 chapterListClassName = `${chapterListClassName} active`
                               }
@@ -95,7 +95,7 @@ class SideNavList extends Component {
 }
 
 function mapStateToProps (state) {
-  return { 
+  return {
     readerChapterProps: state.readerChapter,
     formHasbeenTouched: state.formHasbeenTouched
   }

@@ -5,7 +5,7 @@ import remoteSubmit from './reducer_remoteSubmit'
 import checkNovelTitle from './reducer_checknoveltitle'
 import remoteOpenModal from './reducer_remoteopenmodal'
 import formHasbeenTouched from './reducer_formhasbeentouch'
-import notification from './reducer_notification'
+import showAlert from './reducer_showalert'
 import user from './reducer_user'
 import sideCollapse from './reducer_sidecollapse'
 import { reducer as formReducer } from 'redux-form'
@@ -21,7 +21,7 @@ const rootReducer = combineReducers({
   user: user,
   sideCollapse: sideCollapse,
   formHasbeenTouched: formHasbeenTouched,
-  notification: notification
+  showalert: showAlert
 })
 
 export default rootReducer

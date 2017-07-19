@@ -163,9 +163,9 @@ class SectionHeaderBar extends Component {
               </div>
               <div className='modal-body'>
                 <div className='tiny-scroll-wrapper '>
-                  <div className='scrollbar disable height0'>
-                    <div className='track height0' >
-                      <div className='thumb height0'>
+                  <div style={{height:0}} className='scrollbar disable'>
+                    <div style={{height:0}} className='track' >
+                      <div style={{height:0}} className='thumb'>
                         <div className='end' />
                       </div>
                     </div>

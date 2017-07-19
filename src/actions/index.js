@@ -28,6 +28,7 @@ export const CLEAR_NOTISAVE = 'clear_notisave'
 export const CLEAR_PUBLISH = 'clear_publish'
 export const PUBLISH_PREVIOUS_CHAPTER = 'publish_previous_chapter'
 export const CLEAR_PUBLISH_PREVIOUS_CHAPTER = 'clear_publish_previous_chapter'
+export const HIDE_ALERT = 'hide_alert'
 // Mock up information
 
 const novelList = {
@@ -155,7 +156,7 @@ export function saveChapter (value) {
   if (Object.values(novels[value.novel].novels.publish).indexOf(value.index) > -1) {
     const oldPub = novels[value.novel].novels.publish
     const index = oldPub.indexOf(chapterIndex)
-    
+
     newPub = oldPub
     newPub.splice(index, 1)
     novels[value.novel].novels.publish = newPub
@@ -380,5 +381,10 @@ export function clearPublish () {
 export function clearPublishPreviousChapter () {
   return {
     type: CLEAR_PUBLISH_PREVIOUS_CHAPTER
+  }
+}
+export function hideAlert () {
+  return {
+    type: HIDE_ALERT
   }
 }
