@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
-import { loadNovelList, selectNovelList, remoteSubmitReaderChapter } from '../../actions/index'
-import { connect } from 'react-redux'
 import { submit } from 'redux-form'
-import { bindActionCreators } from 'redux'
+
 import _ from 'lodash'
 
-class SideNavHeader extends Component {
+export default class SideNavHeader extends Component {
   constructor (props) {
     super(props)
     this.state = { selectedValue: this.props.novelList.novels[0].novelId }
@@ -51,22 +49,3 @@ class SideNavHeader extends Component {
     )
   }
 }
-
-function mapStateToProps ({ novelList, readerChapter, formHasbeenTouched }, ownProps) {
-  return {
-    novelList: novelList,
-    currentNovel: readerChapter,
-    formHasbeenTouched: formHasbeenTouched
-  }
-}
-
-function mapDispatchToProps (dispatch) {
-  return {
-    loadNovelList: bindActionCreators(loadNovelList, dispatch),
-    selectNovelList: bindActionCreators(selectNovelList, dispatch),
-    remoteSubmitReaderChapter: bindActionCreators(remoteSubmitReaderChapter, dispatch),
-    dispatch
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(SideNavHeader)

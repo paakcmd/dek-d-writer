@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { createChapter, loadNovel, selectChapter, remoteSubmitReaderChapter } from '../../actions/index'
 import { submit } from 'redux-form'
-import { bindActionCreators } from 'redux'
 
-class SideNavList extends Component {
+export default class SideNavList extends Component {
   componentWillMount () {
     this.props.loadNovel()
   }
@@ -94,22 +91,3 @@ class SideNavList extends Component {
   }
 }
 
-function mapStateToProps (state) {
-  return {
-    readerChapterProps: state.readerChapter,
-    formHasbeenTouched: state.formHasbeenTouched
-  }
-}
-
-function mapDispatchToProps (dispatch) {
-  return {
-    createChapter: bindActionCreators(createChapter, dispatch),
-    loadNovel: bindActionCreators(loadNovel, dispatch),
-    selectChapter: bindActionCreators(selectChapter, dispatch),
-    remoteSubmitReaderChapter: bindActionCreators(remoteSubmitReaderChapter, dispatch),
-    dispatch
-  }
-}
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(SideNavList)

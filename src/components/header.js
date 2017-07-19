@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import { submit } from 'redux-form'
-import { setPubandSub, clearPubandSub, autoSave, remoteSubmitReaderChapter, publishChapter, remoteSubmitTypeIdentify } from '../actions/index'
-import { bindActionCreators } from 'redux'
 import Modal from 'react-modal'
 import SwitchButton from 'react-switch-button'
 
 
-class Header extends Component {
+export default class Header extends Component {
   constructor () {
     super()
 
@@ -332,25 +329,3 @@ class Header extends Component {
     )
   }
 }
-function mapStateToProps (state, ownProps) {
-  return {
-    readerChapterProps: state.readerChapter,
-    remoteSubmit: state.remoteSubmit,
-    notification: state.notification
-
-  }
-}
-
-function mapDispatchToProps (dispatch) {
-  return {
-    publishChapter: bindActionCreators(publishChapter, dispatch),
-    remoteSubmitReaderChapter: bindActionCreators(remoteSubmitReaderChapter, dispatch),
-    remoteSubmitTypeIdentify: bindActionCreators(remoteSubmitTypeIdentify, dispatch),
-    autoSave: bindActionCreators(autoSave, dispatch),
-    setPubandSub: bindActionCreators(setPubandSub, dispatch),
-    clearPubandSub: bindActionCreators(clearPubandSub, dispatch),
-    dispatch
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header)

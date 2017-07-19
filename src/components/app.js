@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import Header from './header'
-import SideNav from './side-nav/index'
-import SectionContent from '../containers/section-content'
-import ShowAlert from './showAlert'
+import Header from '../containers/Header'
+import SideNav from '../containers/side-nav'
+import SectionContent from '../containers/Section-content'
+import ShowAlert from '../containers/ShowAlert'
 import { connect } from 'react-redux'
 class App extends Component {
 

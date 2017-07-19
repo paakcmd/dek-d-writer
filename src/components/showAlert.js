@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
-import { hideAlert, clearPublish } from  '../actions/index'
-class ShowAlert extends Component {
+
+export default class ShowAlert extends Component {
   constructor(props){
     super(props)
   }
@@ -47,9 +46,3 @@ class ShowAlert extends Component {
   }
 }
 
-function mapStateToProps (state, ownProps) {
-  return {
-    showalert: state.showalert
-  }
-}
-export default connect(mapStateToProps, { hideAlert, clearPublish})(ShowAlert)

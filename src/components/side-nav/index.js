@@ -1,10 +1,9 @@
 import React,{ Component } from 'react'
-import SideNavHeader from './side-nav-header'
-import SideNavList from './side-nav-list'
-import { connect } from 'react-redux'
-import { sideCollapse } from '../../actions/index'
+import SideNavHeader from '../../containers/side-nav/Side-nav-header'
+import SideNavList from '../../containers/side-nav/Side-nav-list'
 
-class SideNav extends Component {
+
+export default class SideNav extends Component {
   render(){
     return(
       <div id="side-nav" >
@@ -18,4 +17,3 @@ class SideNav extends Component {
   }
 }
 
-export default connect(null, { sideCollapse })(SideNav)
