@@ -92,15 +92,15 @@ class Header extends Component {
             </div>
             <div className='modal-body'>
               <div className='tiny-scroll-wrapper '>
-                <div className='scrollbar height192' >
-                  <div className='track height192'>
-                    <div className='thumb height50 top0.38587' >
+                <div style={{height:192}} className='scrollbar' >
+                  <div style={{height:192}} className='track '>
+                    <div style={{height:50, top:0.38587}} className='thumb' >
                       <div className='end' />
                     </div>
                   </div>
                 </div>
                 <div className='viewport'>
-                  <div className='js-tinyscroll overview top-6'>
+                  <div style={{top:-6}} className='js-tinyscroll overview'>
                     <div className='tab-section'>
                       <div className='section-header'>แนวทางควบคุมนิยาย</div>
                       <div className='section-descript'><strong>เนื่องจากเว็บไซต์ Dek-D.com มีผู้ใช้งานเป็นเยาวชนจำนวนมาก จึงขอพิจารณาความเหมาะสมของผลงานในส่วนของ </strong>เนื้อหาในหน้าสารบัญ, เนื้อหาในตอนย่อย, ชื่อเรื่อง, คำโปรย และภาพประกอบเรื่อง ด้วยแนวทางควบคุมดังนี้</div>

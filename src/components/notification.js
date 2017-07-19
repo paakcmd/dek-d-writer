@@ -20,7 +20,7 @@ class Notification extends Component {
   }
 
   getShowClass() {
-    return '-show'
+    return 'show-alert'
   }
 
 
@@ -73,11 +73,11 @@ class Notification extends Component {
   }*/
 
   render () {
-    let publishALertCss = 'alert-template alert-result-redirect alert-result-success'
+    let publishAlertCss = 'alert-template alert-result-redirect alert-result-success'
     const typeOfAlert = `${this.state.type === 'normal' ? 'alert-result-info' : 'alert-result-success'}`
     const showAlert = `${this.state.display === 'show' ? 'show-alert' : ''}`
     const alert = `${this.state.display === 'show' ? typeOfAlert + ' alert-template-mini ' + showAlert : ''}`
-    const publishAlert = `${this.state.displayPublish === 'show' ? publishALertCss + ' displayBlock' : publishALertCss}`
+    const publishAlert = `${this.state.displayPublish === 'show' ? publishAlertCss + ' displayBlock' : publishAlertCss}`
     console.log(publishAlert)
 
     return (

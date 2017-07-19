@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Header from './header'
 import SideNav from './side-nav/index'
 import SectionContent from '../containers/section-content'
-import Notification from './notification'
+import ShowAlert from './showAlert'
 import { connect } from 'react-redux'
 class App extends Component {
 
@@ -14,10 +14,10 @@ class App extends Component {
         <div className={pageWrapperClassName}>
           <SideNav />
           <Header />
-          <div className="mockupToolBar"><img src="Screen Shot 2560-07-14 at 3.54.40 PM.png"/></div> 
+          <div className="mockupToolBar"><img src="Screen Shot 2560-07-14 at 3.54.40 PM.png"/></div>
           <SectionContent />
         </div>
-        <Notification />
+        <ShowAlert />
       </div>
     )
   }
@@ -25,7 +25,7 @@ class App extends Component {
 
 function mapStateToProps (state, ownProps) {
   return {
-    sideCollapse: state.sideCollapse,
+    sideCollapse: state.sideCollapse
   }
 }
 export default connect(mapStateToProps)(App)
