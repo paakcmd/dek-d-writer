@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { hideAlert, clearPublish } from  '../actions/index'
-import ShowAlert from '../components/showAlert'
+import ShowAlert from '../components/show-alert'
 
 function mapStateToProps (state, ownProps) {
   return {
