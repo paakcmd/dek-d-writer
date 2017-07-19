@@ -1,7 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { clearPublishPreviousChapter, clearPublish, clearNotiSave } from '../actions/index'
+
+(props) => (
+    <div>{props.message}</div>
+)
+
 class Notification extends Component {
+
   constructor () {
     super()
     this.state = {
@@ -13,6 +19,35 @@ class Notification extends Component {
     }
   }
 
+  getShowClass() {
+    return '-show'
+  }
+
+
+  show(type = 'success', message = 'test') {
+	  this.setState({message})
+	  this.refs.container.classList.add(this.getShowClass())
+      this
+      switch(type) {
+          case 'success': this.refs.container.classList.add('-success')
+		  case 'warning': this.refs.container.classList.add('-warning')
+      }
+  }
+
+  hide() {
+	  this.refs.container.classList.remove('-show -success -warning')
+  }
+
+  componentDidUpdate(props) {
+    if(props.show) {
+      this.show(props.alertType, props.message)
+      setTimeout(() => {
+		  this.hide()
+      }, props.time)
+    }
+  }
+
+  /*
   componentDidUpdate (prevProps) {
     if (prevProps.notification.autoSave === 0 && this.props.notification.autoSave === 1) {
       this.setState({ type: 'success', message: 'เปิดการบันทึกอัตโนมัติ', display: 'show' })
@@ -35,7 +70,7 @@ class Notification extends Component {
       this.setState({display: 'show', type: 'normal', message: 'บันทึกแล้ว แต่ไม่สามารถ Publish ได้เพราะตอนก่อนหน้ายังไม่ได้ Publish'})
       setTimeout(() => { this.setState({ display: 'hide' }); this.props.clearPublishPreviousChapter() }, 3000)
     }
-  }
+  }*/
 
   render () {
     let publishALertCss = 'alert-template alert-result-redirect alert-result-success'
@@ -47,26 +82,44 @@ class Notification extends Component {
 
     return (
       <div>
-        <div className={alert}>
+        <div ref="container" className={alert}>
           <button type='button' className='close' style={{ display: 'none' }}>×</button>
           <div className='alert-content'>{this.state.message}</div>
         </div>
-        <div className={publishAlert} >
-          <div className='process-progress' style={{ width: '100%' }} />
-          <button onClick={()=>{this.setState({displayPublish: 'hide'})}} type='button' className='close'>×</button>
-          <div className='no-support no-content alert-content'>
-            <div className='image-icon'>
-              <div className='bombom-txt'>ต้องตั้งชื่อเรื่องก่อนนะคับ</div>
-            </div>
-            <div className='loading-txt'>
-              <div className='label-txt'>Publish สำเร็จ!!</div>
-              <div className='publishing-chapter-name'>คำนำนักเขียน -คุยกันก่อนอ่านเนอะ-</div>
-            </div>
-            <button className='btn-action btn-raised btn-orange-theme'>เปิดหน้าอ่านนิยาย</button>
-            <div id='captcha-wrapper' /></div>
-        </div>
       </div>
     )
+  }
+}
+
+
+class SpecialAlert extends Notification {
+
+    getShowClass() {
+	    return '-show-publish'
+    }
+
+
+  render() {
+    return (
+        <div>
+          <div ref="container" className={alert}>
+        <div className={publishAlert} >
+          <div className='process-progress' style={{ width: '100%' }} />
+            <button onClick={()=>{this.hide()}} type='button' className='close'>×</button>
+            <div className='no-support no-content alert-content'>
+        <div className='image-icon'>
+          <div className='bombom-txt'>ต้องตั้งชื่อเรื่องก่อนนะคับ</div>
+        </div>
+        <div className='loading-txt'>
+          <div className='label-txt'>Publish สำเร็จ!!</div>
+          <div className='publishing-chapter-name'>คำนำนักเขียน -คุยกันก่อนอ่านเนอะ-</div>
+        </div>
+        <button className='btn-action btn-raised btn-orange-theme'>เปิดหน้าอ่านนิยาย</button>
+        <div id='captcha-wrapper' /></div>
+    </div>
+          </div>
+        </div>
+            )
   }
 }
 
@@ -75,4 +128,5 @@ function mapStateToProps (state, ownProps) {
     notification: state.notification
   }
 }
+
 export default connect(mapStateToProps, { clearPublishPreviousChapter, clearPublish, clearNotiSave })(Notification)
