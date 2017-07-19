@@ -57,9 +57,7 @@
 .richtext-space textarea::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   color: #85420A;
 }
-.chapter-li-wrapper{
-  overflow: scroll !important;
-}
+
 .tiny-scroll-wrapper .viewport {
   overflow: scroll !important;
 }
@@ -71,10 +69,10 @@
 }
 .app-modal.hide.fade {
   width:100% !important;
-  
+
 }
 #modal-story-settings{
-  left: auto !important; 
+  left: auto !important;
   max-width: auto !important;
   margin-right: 85px;
 }
@@ -92,8 +90,8 @@ div.ReactTags__tagInput {
     min-width: 300px;
     border-radius: 2px;
     display: block;
-    
-  
+
+
 }
 div.ReactTags__tagInput input.ReactTags__tagInputField,
 div.ReactTags__tagInput input.ReactTags__tagInputField:focus {
@@ -105,7 +103,7 @@ div.ReactTags__tagInput input.ReactTags__tagInputField:focus {
     background-color:rgba(255,255,255,.15);
     color:white;
     border-radius: 0px;
-    
+
 }
 div.ReactTags__tags {
     display: inline-block;
@@ -122,7 +120,7 @@ div.ReactTags__selected span.ReactTags__tag {
     color:white;
     cursor: move;
     border-radius: 2px;
-    
+
 }
 div.ReactTags__selected a.ReactTags__remove {
     color: #aaa;
