@@ -13,8 +13,9 @@ export default class Header extends Component {
     }
 
     this.openModal = this.openModal.bind(this)
-
+    this.allowPublish = this.allowPublish.bind(this)
     this.closeModal = this.closeModal.bind(this)
+    this.onPublish = this.onPublish.bind(this)
   }
   componentDidUpdate (prevProps) {
     if (prevProps.readerChapterProps.autoSave === 0 && this.props.readerChapterProps.autoSave === 1) {
@@ -84,7 +85,7 @@ export default class Header extends Component {
           contentLabel="Modal"
         >
           
-          <AgreementModal closeModal={this.closeModal} allowPublish={this.allowPublish}/>
+          <AgreementModal closeModal={this.closeModal} allowPublish={this.allowPublish} novel={novel}/>
         </Modal>
         <div id='story-editor-toolbar' className={headerWrapperClassName}>
           <div className={headerInsideClassName}>
@@ -99,7 +100,7 @@ export default class Header extends Component {
             </div>
 
           </div>
-          <div className={headerTitleClassName} title='ข้อมูลเบื้องต้นของเรื่องนี้'>{this.props.readerChapterProps.novels.chapters[this.props.readerChapterProps.chapterNumber].name ? this.props.readerChapterProps.novels.chapters[this.props.readerChapterProps.chapterNumber].name : 'ตอนที่ยังไม่ได้ตั้งชื่อ'}</div>
+          <div className={headerTitleClassName} title='ข้อมูลเบื้องต้นของเรื่องนี้'>{this.props.readerChapterProps.novels.chapters[this.props.readerChapterProps.chapterNumber].name || 'ตอนที่ยังไม่ได้ตั้งชื่อ' }</div>
         </div>
 
       </div>

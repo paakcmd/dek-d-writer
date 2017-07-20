@@ -15,4 +15,4 @@ ReactDOM.render(
   <Provider store={store}>
     <App />
   </Provider>
-  , document.querySelector('.page-wrapper'));
+  , document.querySelector('#page-wrapper'));

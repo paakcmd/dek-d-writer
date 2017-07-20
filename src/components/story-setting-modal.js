@@ -7,10 +7,12 @@ export default ({
     novelTitle, onInputChange, categoryButtonClassName, 
     statusNovelTitleClassName, checkNovel, categoryButton,
     categoryTitle, tags, handleDelete, handleAddition, handleDrag,
-    handleSubmit, checkSetStateHandler, onPickCategory
+    handleSubmit, checkSetStateHandler, onPickCategory, renderList
 
  }) => {
-    console.log(categoryButton)
+    
+    
+    
     return (
         <div id='modal-story-settings' className='app-modal modal fixed-footer hide fade in displayBlock'>
             <form onSubmit={handleSubmit(onSubmit)}  className='form-story-settings' acceptCharset='UTF-8'>
@@ -61,71 +63,42 @@ export default ({
                                   <a tabIndex='-1' className='menu-item main-cat cat-1-0' data-main-group='1' data-groupa='0'>ฟรีสไตล์</a>
                                   <ul className='dropdown-menu popmenu-template popmenu-sub subcategory-dropdown'>
                                     <li className='menu-item header'>นิยายรัก</li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-1-2' data-main-group='1' data-groupa='2'> นิยายรักหวานแหวว</a></li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-1-3' data-main-group='1' data-groupa='3'>นิยายซึ้งกินใจ</a></li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-1-4' data-main-group='1' data-groupa='4'>นิยายรักดราม่า</a></li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-1-21' data-main-group='1' data-groupa='21'>นิยายรักคอมเมดี้</a></li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-1-22' data-main-group='1' data-groupa='22'>นิยายรักแฟนตาซี</a></li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-1-1' data-main-group='1' data-groupa='1'>นิยายวาย</a></li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-1-23' data-main-group='1' data-groupa='23'>นิยายรักสีเทา</a></li>
+                                    {
+                                        [2,3,4,21,22,1,23].map(index => renderList (1,index))
+                                    }
                                     <li className='menu-item divider' />
                                     <li className='menu-item header'>นิยายตื่นเต้น</li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-1-16' data-main-group='1' data-groupa='16'>นิยายแฟนตาซี</a></li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-1-24' data-main-group='1' data-groupa='24'>นิยายเกมออนไลน์</a></li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-1-18' data-main-group='1' data-groupa='18'>นิยายวิทยาศาสตร์</a></li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-1-8' data-main-group='1' data-groupa='8'>นิยายระทึกขวัญ</a></li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-1-7' data-main-group='1' data-groupa='7'>นิยายสืบสวน</a></li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-1-17' data-main-group='1' data-groupa='17'>นิยายกำลังภายใน</a></li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-1-9' data-main-group='1' data-groupa='9'>นิยายสงคราม</a></li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-1-6' data-main-group='1' data-groupa='6'>นิยายผจญภัย</a></li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-1-12' data-main-group='1' data-groupa='12'>นิยายอดีต ปัจจุบัน อนาคต</a></li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-1-25' data-main-group='1' data-groupa='25'>นิยายบู๊ แอ๊คชั่น</a></li>
+                                    {
+                                        [16,24,18,8,7,17,9,6,12,25].map(index => renderList (1,index))
+                                    }
                                     <li className='menu-item divider' />
                                     <li className='menu-item header'>แฟนฟิค</li>
-                                    <li><a tabIndex='-1' onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} className='menu-item sub-cat cat-1-26' data-main-group='1' data-groupa='26'>แฟนฟิคเกาหลี</a></li>
-                                    <li><a tabIndex='-1' onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} className='menu-item sub-cat cat-1-27' data-main-group='1' data-groupa='27'>แฟนฟิคไทย</a></li>
-                                    <li><a tabIndex='-1' onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} className='menu-item sub-cat cat-1-28' data-main-group='1' data-groupa='28'>แฟนฟิคเอเชีย</a></li>
-                                    <li><a tabIndex='-1' onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} className='menu-item sub-cat cat-1-29' data-main-group='1' data-groupa='29'>แฟนฟิคฝรั่ง</a></li>
-                                    <li><a tabIndex='-1' onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} className='menu-item sub-cat cat-1-30' data-main-group='1' data-groupa='30'>แฟนฟิคนิยาย การ์ตูน เกม</a></li>
-                                    <li><a tabIndex='-1' onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} className='menu-item sub-cat cat-1-19' data-main-group='1' data-groupa='19'>แฟนฟิคอื่นๆ</a></li>
+                                    {
+                                        [26,27,28,29,30,19].map(index => renderList (1,index))
+                                    }
                                     <li className='menu-item divider' />
                                     <li className='menu-item header'>นิยายอื่นๆ</li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-1-5' data-main-group='1' data-groupa='5'>นิทาน วรรณกรรม</a></li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-1-11' data-main-group='1' data-groupa='11'>กลอน</a></li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-1-14' data-main-group='1' data-groupa='14'>สังคม</a></li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-1-13' data-main-group='1' data-groupa='13'>จิตวิทยา</a></li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-1-10' data-main-group='1' data-groupa='10'>ตลก-ขบขัน</a></li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-1-15' data-main-group='1' data-groupa='15'>นิยายหักมุม</a></li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-1-0' data-main-group='1' data-groupa='0'>อื่น ๆ</a></li>
+                                    {
+                                        [5,11,14,13,10,15,0].map(index => renderList (1,index))
+                                    }
                                   </ul>
                                 </li>
 
                                 <li className='dropdown-submenu menu-item-outer displayBlock'>
                                   <a tabIndex='-1' className='menu-item main-cat cat-2-0' data-main-group='2' data-groupa='0'>มีสาระ</a>
                                   <ul className='dropdown-menu popmenu-template popmenu-sub subcategory-dropdown'>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-2-5' data-main-group='2' data-groupa='5'>ความรู้แอดมิชชั่น</a></li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-2-7' data-main-group='2' data-groupa='7'>เกร็ดท่องเที่ยว</a></li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-2-6' data-main-group='2' data-groupa='6'>ความรู้กลเม็ด,เทคนิค</a></li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-2-3' data-main-group='2' data-groupa='3'>เกร็ดประวัติศาสตร์</a></li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-2-1' data-main-group='2' data-groupa='1'>ความรู้รอบตัว</a></li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-2-2' data-main-group='2' data-groupa='2'>ความรู้เพื่อดำเนินชีวิต</a></li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-2-4' data-main-group='2' data-groupa='4'>ความรู้เรื่องเรียน</a></li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-2-0' data-main-group='2' data-groupa='0'>อื่นๆ</a></li>
+                                    {
+                                        [5,7,6,3,1,2,4,0].map(index => renderList (2,index))
+                                    }
                                   </ul>
                                 </li>
 
                                 <li className='dropdown-submenu menu-item-outer displayBlock'>
                                   <a tabIndex='-1' className='menu-item main-cat cat-3-0' data-main-group='3' data-groupa='0'>ไลฟ์สไตล์</a>
                                   <ul className='dropdown-menu popmenu-template popmenu-sub subcategory-dropdown'>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-3-1' data-main-group='3' data-groupa='1'>สุขภาพความงาม</a></li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-3-5' data-main-group='3' data-groupa='5'>ดีไซน์ กราฟิก</a></li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-3-3' data-main-group='3' data-groupa='3'>ตามติดคนดัง</a></li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-3-2' data-main-group='3' data-groupa='2'>ของอินเทรนด์</a></li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-3-7' data-main-group='3' data-groupa='7'>ไอที เทคโนโลยี</a></li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-3-6' data-main-group='3' data-groupa='6'>การ์ตูน  เกมส์</a></li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-3-8' data-main-group='3' data-groupa='8'>ประสบการณ์ต่างแดน</a></li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-3-4' data-main-group='3' data-groupa='4'>ดนตรี เพลง หนัง</a></li>
-                                    <li><a onClick={(e) => { onPickCategory(e.target.getAttribute('data-main-group'), e.target.getAttribute('data-groupa'), e.target.innerHTML) }} tabIndex='-1' className='menu-item sub-cat cat-3-0' data-main-group='3' data-groupa='0'>อื่นๆ</a></li>
+                                    {
+                                        [1,5,3,2,7,6,8,4,0].map(index => renderList (3,index))
+                                    }
                                   </ul>
                                 </li>
                               </ul>

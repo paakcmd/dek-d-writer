@@ -26,6 +26,7 @@ export default class SectionHeaderBar extends Component {
     this.checkSetStateHandler = this.checkSetStateHandler.bind(this)
     this.categoryButtonSetStateHandler = this.categoryButtonSetStateHandler.bind(this)
     this.onPickCategory = this.onPickCategory.bind(this)
+    this.renderList = this.renderList.bind(this)
   }
 
   componentDidUpdate (prevProps) {
@@ -89,12 +90,13 @@ export default class SectionHeaderBar extends Component {
     this.setState({ novelTitle: term, checked: 0 })
   }
   onPickCategory (main, sub, text) {
+    console.log("main")
     var maintext = ''
-    if (main === '1') {
+    if (main === 1) {
       maintext = 'ฟรีสไตล์ > '
-    } else if (main === '2') {
+    } else if (main === 2) {
       maintext = 'มีสาระ > '
-    } else if (main === '3') {
+    } else if (main === 3) {
       maintext = 'ไลฟ์สไตล์ > '
     }
     maintext = maintext + text
@@ -129,6 +131,16 @@ export default class SectionHeaderBar extends Component {
       }
     }
   }
+  renderList(maingroup,index){
+    const title = _.find(novelCategory, { main: parseInt(maingroup), sub: parseInt(index) }).title
+    return (
+      <li>
+          <a onClick={(e) => { this.onPickCategory(maingroup,index, title) }} tabIndex='-1' className={`menu-item sub-cat cat-${maingroup}-${index}`} data-main-group={maingroup} data-groupa={index}> {title}
+          </a>
+      </li>
+    )
+  }
+
   render () {
     const modalStyles = {
       content: {
@@ -164,6 +176,7 @@ export default class SectionHeaderBar extends Component {
           contentLabel="Modal"
         >
           <StorySettingModal 
+          
             categoryButtonSetStateHandler={this.categoryButtonSetStateHandler}
             checkSetStateHandler={this.checkSetStateHandler}
             handleSubmit={this.props.handleSubmit}
@@ -183,6 +196,7 @@ export default class SectionHeaderBar extends Component {
             handleDelete={this.handleDelete}
             handleAddition={this.handleAddition}
             handleDrag={this.handleDrag}
+            renderList={this.renderList}
           />
           
         </Modal>

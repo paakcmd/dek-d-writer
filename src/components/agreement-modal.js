@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default ( {closeModal, allowPublish }) => {
+export default ( {closeModal, allowPublish, novel }) => {
     return (
         <div id='modal-agreement' className='app-modal modal fixed-footer hide fade in displayBlock' aria-hidden='false'>
             <div className='modal-header'>
