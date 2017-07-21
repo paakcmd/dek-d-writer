@@ -176,7 +176,6 @@ export default class SectionHeaderBar extends Component {
           contentLabel="Modal"
         >
           <StorySettingModal 
-          
             categoryButtonSetStateHandler={this.categoryButtonSetStateHandler}
             checkSetStateHandler={this.checkSetStateHandler}
             handleSubmit={this.props.handleSubmit}

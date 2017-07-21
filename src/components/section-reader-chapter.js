@@ -64,14 +64,15 @@ export default class SectionReaderChapter extends Component {
     console.log(this.props)
   }
   render () {
+    const { chapterNumber } = this.props.readerChapterProps
     const editClassName = ` ${this.state.edittingTitle === 'Yes' ? '' : 'edit'}`
     const { handleSubmit, formHasbeenTouched } = this.props
     const chapter = this.props.readerChapterProps.novels.chapters[this.props.readerChapterProps.chapterNumber]
-    const introNameClassName = `${this.props.readerChapterProps.chapterNumber === 0 ? 'section-reader-chapter displayNone' : 'section-reader-chapter'}`
-    const introKumPloyClassName = `${this.props.readerChapterProps.chapterNumber === 0 ? 'section-reader-headbar' : 'displayNone section-reader-headbar'}`
+    const introNameClassName = `${chapterNumber === 0 ? 'section-reader-chapter displayNone' : 'section-reader-chapter'}`
+    const introKumPloyClassName = `${chapterNumber === 0 ? 'section-reader-headbar' : 'displayNone section-reader-headbar'}`
     const codeBlockerClassName = `${this.props.readerChapterProps.novels.staticPublish.length > 0 ? 'code-blocker vertical-middle-wrapper displayNone' : 'code-blocker vertical-middle-wrapper'}`
-    const cssFillerBlockClassName = `${this.props.readerChapterProps.chapterNumber === 0 ? '' : 'displayNone'}`
-    const abstractOrChapterClassName2 = `${this.props.readerChapterProps.chapterNumber === 0 ? 'displayNone' : 'displayBlock'}`
+    const cssFillerBlockClassName = `${chapterNumber === 0 ? '' : 'displayNone'}`
+    const abstractOrChapterClassName2 = `${chapterNumber === 0 ? 'displayNone' : 'displayBlock'}`
     return (
       <div>
         <form onSubmit={(e) => {
@@ -81,7 +82,7 @@ export default class SectionReaderChapter extends Component {
 
           <div className={introNameClassName} >
             <div className='chapter-name-wrapper editable' onClick={this.sectionReaderChapterEdit.bind(this)}>
-              <span className='chapter-count'>ตอนที่ <span className='val'>{this.props.readerChapterProps.chapterNumber }</span> : </span>
+              <span className='chapter-count'>ตอนที่ <span className='val'>{chapterNumber }</span> : </span>
               <span className='chapter-name hide-on-edit edit-target'>{chapter.name ? chapter.name : 'ตอนที่ยังไม่ได้ตั้งชื่อ'}</span>
               <div className={editClassName}>
 
@@ -174,7 +175,7 @@ export default class SectionReaderChapter extends Component {
           <div className={abstractOrChapterClassName2}>
         <div className='section-reader-bottom-chapter' >
           <div className='chapter-name-wrapper editable' onClick={this.sectionReaderChapterEdit.bind(this)}>
-            <span className='chapter-count'>ตอนที่ <span className='val'>{this.props.readerChapterProps.chapterNumber }</span> : </span>
+            <span className='chapter-count'>ตอนที่ <span className='val'>{chapterNumber }</span> : </span>
             <span className='chapter-name hide-on-edit edit-target'>{chapter.name ? chapter.name : 'ตอนที่ยังไม่ได้ตั้งชื่อ'}</span>
             <div className={editClassName}>
               <Field
