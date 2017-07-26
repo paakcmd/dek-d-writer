@@ -64,17 +64,17 @@ export default ({
                                   <ul className='dropdown-menu popmenu-template popmenu-sub subcategory-dropdown'>
                                     <li className='menu-item header'>นิยายรัก</li>
                                     {
-                                        [2,3,4,21,22,1,23].map(index => renderList (1,index))
+                                        [2,3,4,21,22,1,23].map(index => renderList(1,index))
                                     }
                                     <li className='menu-item divider' />
                                     <li className='menu-item header'>นิยายตื่นเต้น</li>
                                     {
-                                        [16,24,18,8,7,17,9,6,12,25].map(index => renderList (1,index))
+                                        [16,24,18,8,7,17,9,6,12,25].map(index => renderList(1,index))
                                     }
                                     <li className='menu-item divider' />
                                     <li className='menu-item header'>แฟนฟิค</li>
                                     {
-                                        [26,27,28,29,30,19].map(index => renderList (1,index))
+                                        [26,27,28,29,30,19].map(index => renderList(1,index))
                                     }
                                     <li className='menu-item divider' />
                                     <li className='menu-item header'>นิยายอื่นๆ</li>
@@ -88,7 +88,7 @@ export default ({
                                   <a tabIndex='-1' className='menu-item main-cat cat-2-0' data-main-group='2' data-groupa='0'>มีสาระ</a>
                                   <ul className='dropdown-menu popmenu-template popmenu-sub subcategory-dropdown'>
                                     {
-                                        [5,7,6,3,1,2,4,0].map(index => renderList (2,index))
+                                        [5,7,6,3,1,2,4,0].map(index => renderList(2,index))
                                     }
                                   </ul>
                                 </li>
@@ -97,7 +97,7 @@ export default ({
                                   <a tabIndex='-1' className='menu-item main-cat cat-3-0' data-main-group='3' data-groupa='0'>ไลฟ์สไตล์</a>
                                   <ul className='dropdown-menu popmenu-template popmenu-sub subcategory-dropdown'>
                                     {
-                                        [1,5,3,2,7,6,8,4,0].map(index => renderList (3,index))
+                                        [1,5,3,2,7,6,8,4,0].map(index => renderList(3,index))
                                     }
                                   </ul>
                                 </li>

@@ -27,6 +27,7 @@ export default class SectionHeaderBar extends Component {
     this.categoryButtonSetStateHandler = this.categoryButtonSetStateHandler.bind(this)
     this.onPickCategory = this.onPickCategory.bind(this)
     this.renderList = this.renderList.bind(this)
+    this.onInputChange = this.onInputChange.bind(this)
   }
 
   componentDidUpdate (prevProps) {
@@ -60,7 +61,6 @@ export default class SectionHeaderBar extends Component {
   }
 
   openModal () {
-    console.log(typeof(modalIsOpen))
     this.setState({ modalIsOpen: true })
   }
 
@@ -134,8 +134,8 @@ export default class SectionHeaderBar extends Component {
   renderList(maingroup,index){
     const title = _.find(novelCategory, { main: parseInt(maingroup), sub: parseInt(index) }).title
     return (
-      <li>
-          <a onClick={(e) => { this.onPickCategory(maingroup,index, title) }} tabIndex='-1' className={`menu-item sub-cat cat-${maingroup}-${index}`} data-main-group={maingroup} data-groupa={index}> {title}
+      <li key={`${maingroup}${index}`} >
+          <a  onClick={(e) => { this.onPickCategory(maingroup,index, title) }} tabIndex='-1' className={`menu-item sub-cat cat-${maingroup}-${index}`} data-main-group={maingroup} data-groupa={index}> {title}
           </a>
       </li>
     )

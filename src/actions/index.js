@@ -221,6 +221,7 @@ export function selectChapter (selectChapterId) {
 }
 
 export function loadNovel () {
+  
   // load novels from db
   const novels = JSON.parse(localStorage.getItem('novels'))
 
@@ -231,8 +232,12 @@ export function loadNovel () {
 }
 
 export function loadNovelList () {
-  // load novelList from db
-  const novelList = JSON.parse(localStorage.getItem('novelList'))
+  // load novelList from db  not a transformed version like this prototype
+  // const novelList = JSON.parse(localStorage.getItem('novelList'))
+  const novels = JSON.parse(localStorage.getItem('novels'))
+  const preNovelList = novels.map(novel => { return { "novelId": novel.novelId, novelTitle: novel.novels.novelTitle  } })
+  const novelList = { novels: preNovelList }
+
 
   return {
     type: LOAD_NOVELLIST,
